@@ -1,0 +1,42 @@
+# ---- credentials: never commit these ----
+espn_credentials.env
+*.env
+!*.env.example
+.env
+.envrc
+
+# ---- raw ESPN pulls ----
+# These contain every league member's SWID and their real names.
+history_cache/
+*.cache
+
+# ---- computed data ----
+# No cookies, but it still carries member SWIDs and full owner names as team
+# keys. Only the sanitised docs/index.html is safe to publish.
+league_history.json
+
+# ---- diagnostics output ----
+probe_report.json
+
+# ---- local build output ----
+# docs/index.html is deliberately NOT ignored: that is the published file.
+dashboard_static.html
+
+# ---- python ----
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# ---- node (only used by the offline layout tests) ----
+node_modules/
+package-lock.json
+
+# ---- editors and os ----
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

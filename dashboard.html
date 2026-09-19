@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>League history</title>
+<style>
+:root{
+  --bg:#0e1620; --panel:#16222d; --panel2:#1c2b38; --line:#26394a; --line2:#1f2f3d;
+  --ink:#e9eff4; --mute:#8ba1b2; --dim:#5d7181;
+  --lucky:#f0a04b; --unlucky:#4fb8d8; --even:#6b8092;
+  --win:#4fbf87; --loss:#d2635a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-variant-numeric:tabular-nums; font-size:15px; line-height:1.45;
+  -webkit-text-size-adjust:100%;
+}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--lucky);outline-offset:2px;border-radius:4px}
+
+/* ---- shell ---- */
+header{
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  padding:16px 20px;border-bottom:1px solid var(--line);
+}
+.brand{font-size:19px;font-weight:650;letter-spacing:-.01em;margin-right:auto}
+.brand span{display:block;font-size:12.5px;font-weight:400;color:var(--dim);letter-spacing:0}
+.seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{padding:7px 15px;font-size:13.5px;color:var(--mute)}
+.seg button[aria-pressed="true"]{background:var(--panel2);color:var(--ink)}
+select{
+  background:var(--panel);color:var(--ink);border:1px solid var(--line);
+  border-radius:8px;padding:7px 10px;font-size:13.5px;
+}
+main{display:grid;grid-template-columns:264px minmax(0,1fr);gap:16px;padding:16px 20px 40px}
+@media(max-width:980px){main{grid-template-columns:1fr}}
+.col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.panel h2{margin:0 0 2px;font-size:14px;font-weight:600}
+.panel p.note{margin:0 0 12px;font-size:12.5px;color:var(--dim);max-width:66ch}
+
+/* ---- team rail ---- */
+.rail{padding:8px}
+.rail h2{padding:8px 8px 2px}
+.rail p.note{padding:0 8px}
+.trow{
+  display:grid;grid-template-columns:10px 1fr auto;gap:9px;align-items:center;
+  width:100%;text-align:left;padding:7px 8px;border-radius:7px;
+}
+.trow:hover{background:var(--panel2)}
+.trow[aria-pressed="true"]{background:var(--panel2)}
+.trow .swatch{width:10px;height:10px;border-radius:3px}
+.trow .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13.5px}
+.trow .sub{display:block;font-size:11.5px;color:var(--dim)}
+.trow[aria-pressed="false"]{opacity:.72}
+.luckbar{position:relative;width:58px;height:16px}
+.luckbar i{position:absolute;top:4px;height:8px;border-radius:2px}
+.luckbar u{position:absolute;left:29px;top:1px;width:1px;height:14px;background:var(--line);text-decoration:none}
+.clearsel{padding:8px;font-size:12.5px;color:var(--mute)}
+
+/* ---- charts ---- */
+.chartwrap{position:relative;margin-top:10px}
+.chartwrap svg{display:block;width:100%;height:auto}
+.tip{
+  position:absolute;pointer-events:none;z-index:5;opacity:0;transition:opacity .1s;
+  background:#0b131b;border:1px solid var(--line);border-radius:8px;padding:8px 10px;
+  font-size:12.5px;min-width:140px;box-shadow:0 8px 24px rgba(0,0,0,.5);
+}
+.tip.pinned{pointer-events:auto}
+.tip .th{color:var(--mute);margin-bottom:4px;display:flex;justify-content:space-between;gap:10px}
+.tip .th .x{color:var(--dim)}
+.tip .tr{display:flex;gap:10px;justify-content:space-between}
+.tip .tr b{font-weight:600}
+.tip .tr.on{color:var(--lucky)}
+.tip.pinned .tr{cursor:pointer;padding:2px 4px;margin:0 -4px;border-radius:4px}
+.tip.pinned .tr:active{background:var(--panel2)}
+.tip .more{color:var(--dim);margin-top:4px}
+.gridline{stroke:var(--line2)}
+.axis{fill:var(--dim);font-size:11px}
+/* the mobile viewBox is ~2.5x smaller, so units inside it must grow to match */
+.chart.mob .axis{font-size:13px}
+.chart.mob .line{stroke-width:2.1}
+.chart.mob .line.on{stroke-width:3.4}
+.chart.mob .guide{stroke-width:1.4}
+.axis.y{text-anchor:end}
+.line{fill:none;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.line.faded{opacity:.14}
+.line.on{stroke-width:3}
+.guide{stroke:var(--mute);stroke-dasharray:3 3;opacity:.5}
+
+/* ---- tables ---- */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{
+  text-align:right;font-weight:500;color:var(--mute);font-size:12px;
+  padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap;
+}
+th:first-child,td:first-child{text-align:left}
+th.sortable{cursor:pointer}
+th.sortable:hover{color:var(--ink)}
+th[aria-sort]{color:var(--ink)}
+td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--line2);white-space:nowrap}
+tbody tr:hover{background:var(--panel2)}
+tbody tr.on td{background:var(--panel2)}
+tbody tr{cursor:pointer}
+.tname{display:flex;align-items:center;gap:8px}
+.tname i{width:8px;height:8px;border-radius:2px;flex:0 0 8px}
+.pos{color:var(--lucky)} .neg{color:var(--unlucky)}
+.w{color:var(--win)} .l{color:var(--loss)}
+
+/* ---- team view ---- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:1px;background:var(--line2);
+  border:1px solid var(--line2);border-radius:10px;overflow:hidden}
+.stat{background:var(--panel);padding:12px 14px}
+.stat .k{font-size:12px;color:var(--mute)}
+.stat .v{font-size:23px;font-weight:650;letter-spacing:-.02em;margin-top:1px}
+.stat .x{font-size:12px;color:var(--dim)}
+.verdict{font-size:14.5px;line-height:1.55;max-width:70ch;margin:0}
+.verdict b{font-weight:600}
+/* .scrollx is the generic sideways scroller; .h2h is the matchup grid on top of it */
+.scrollx{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scrollx th:first-child,.scrollx td:first-child{position:sticky;left:0;background:var(--panel);z-index:1}
+.scrollx tbody tr:hover td:first-child,.scrollx tbody tr.on td:first-child{background:var(--panel2)}
+.h2h table{font-size:12px;min-width:640px}
+.h2h td,.h2h th{padding:4px 5px;text-align:center}
+.h2h th:first-child,.h2h td:first-child{text-align:left}
+.h2h td.self{color:var(--dim)}
+.empty{color:var(--dim);font-size:13.5px;padding:6px 0}
+.legendnote{font-size:12px;color:var(--dim);margin-top:10px;max-width:62ch}
+.split{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:28px;align-items:start;margin-top:10px}
+.split table{font-size:13px;width:100%}
+.split .chartwrap{margin-top:0}
+.split .scatterside{min-width:0}
+.split .scatterside{max-width:560px}
+@media(max-width:1040px){
+  .split{grid-template-columns:1fr}
+  .split .scatterside{max-width:480px}
+}
+.dot{transition:r .1s}
+
+/* ---- team picker (phones only) ---- */
+.railtoggle{
+  display:none;width:100%;align-items:center;gap:10px;padding:10px 8px;
+  border:1px solid var(--line);border-radius:9px;background:var(--panel2);
+}
+.railtoggle .swatch{width:10px;height:10px;border-radius:3px;flex:0 0 10px}
+.railtoggle .who{flex:1;text-align:left;font-size:14px;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.railtoggle .chev{color:var(--mute);font-size:11px;transition:transform .15s}
+.railtoggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+
+@media(max-width:700px){
+  header{
+    position:sticky;top:0;z-index:30;background:var(--bg);
+    padding:10px 12px;gap:10px;row-gap:8px;
+  }
+  .brand{font-size:16px;flex:1 0 100%;margin-right:0}
+  .brand span{font-size:12px}
+  .seg{flex:1}
+  .seg button{flex:1;padding:9px 6px;font-size:13px;text-align:center}
+  select{padding:9px 8px}
+
+  main{padding:12px 12px 32px;gap:12px}
+  .panel{padding:13px;border-radius:10px}
+  .panel p.note{font-size:12px}
+
+  /* the rail stops being a permanent list and becomes a disclosure */
+  .rail{padding:10px}
+  .rail h2,.rail p.note{display:none}
+  .railtoggle{display:flex}
+  #rail{display:none;margin-top:8px}
+  #rail.open{display:block}
+  .trow{padding:10px 8px;grid-template-columns:10px 1fr auto}
+  .trow .nm{font-size:14px}
+  .clearsel{padding:10px 8px}
+
+  /* every wide table scrolls sideways with the manager column pinned */
+  .h2h table{min-width:560px}
+  .h2h td,.h2h th{padding:5px 4px}
+  .split{gap:16px}
+  .split .scatterside{max-width:none}
+  .stats{grid-template-columns:repeat(auto-fit,minmax(104px,1fr))}
+  .stat{padding:10px 11px}
+  .stat .v{font-size:20px}
+  .verdict{font-size:14px}
+  th{font-size:11.5px;padding:6px}
+  td{padding:8px 6px}
+  .tip{min-width:0;max-width:62%;font-size:12px}
+  .legendnote{font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand" id="brand">League history<span id="sub">loading</span></div>
+  <div class="seg" role="group" aria-label="View">
+    <button id="vLeague" aria-pressed="true">League</button>
+    <button id="vTeam" aria-pressed="false">Team</button>
+    <button id="vAdv" aria-pressed="false">Advanced</button>
+  </div>
+  <select id="seasonSel" aria-label="Season"></select>
+</header>
+
+<main>
+  <div class="col">
+    <div class="panel rail">
+      <h2>Teams</h2>
+      <p class="note">Pick one to follow it through every chart.</p>
+      <button class="railtoggle" id="railToggle" type="button"
+              aria-expanded="false" aria-controls="rail">
+        <span class="swatch" id="railSwatch"></span>
+        <span class="who" id="railWho">All teams</span>
+        <span class="chev">▼</span>
+      </button>
+      <div id="rail"></div>
+      <button class="clearsel" id="clearSel" hidden>Clear selection</button>
+    </div>
+  </div>
+  <div class="col" id="body"></div>
+</main>
+
+<script>
+const EMBEDDED = /*__EMBEDDED_DATA__*/null;
+
+const PALETTE = ["#e05c5c","#4fbf87","#5fa8e8","#e8a33d","#b78be0","#3fc4c0",
+                 "#e0729c","#8dbf4f","#7f8ff0","#d9884f","#5ec7e8","#c2b04a"];
+
+let DATA=null, season=null, view="league", sel=null, sortKey="finish", sortDir=1;
+
+/* Phones get a different chart viewBox, not a scaled-down copy of the desktop one.
+   A 1000-wide box squeezed into 360 CSS pixels renders 11px axis text at about 4px. */
+const PHONE = window.matchMedia("(max-width:700px)");
+let isMobile = PHONE.matches;
+let railOpen = false;
+
+/* Every pinned tooltip registers a closer here, so opening one shuts the others. */
+const openTips = new Set();
+function closeTips(except){ openTips.forEach(fn=>{ if(fn!==except) fn(); }); }
+
+const $ = id => document.getElementById(id);
+const fmt = (n,d=1) => n===null||n===undefined ? "—" : Number(n).toFixed(d);
+const signed = (n,d=1) => (n>0?"+":"") + fmt(n,d);
+const ordinal = n => n + (["th","st","nd","rd"][(n%100-20)%10]||["th","st","nd","rd"][n%100]||"th");
+
+function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;
+  if(text!==undefined)e.textContent=text;return e;}
+
+/* ---------- data helpers ---------- */
+function S(){ return DATA.data[season]; }
+function teamsOf(){ return S().teams; }
+function byKey(k){ return teamsOf().find(t=>t.key===k) || null; }
+function colorOf(k){
+  const i = DATA.colorIndex[k];
+  return i===undefined ? "#7f8fa0" : PALETTE[i % PALETTE.length];
+}
+function luckWord(z){
+  if(z>=2) return "very fortunate";
+  if(z>=0.75) return "fortunate";
+  if(z<=-2) return "badly hard done by";
+  if(z<=-0.75) return "unlucky";
+  return "about right";
+}
+
+/* ---------- generic line chart ---------- */
+function lineChart(opts){
+  const W = isMobile ? 400 : 1000;
+  const H = isMobile ? (opts.mHeight || 300) : (opts.height || 360);
+  const m = isMobile ? {t:12,r:12,b:34,l:40} : {t:14,r:16,b:30,l:44};
+  const iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const n=opts.xLabels.length;
+  const xs = i => n===1 ? m.l+iw/2 : m.l + iw*i/(n-1);
+
+  let vals=[];
+  opts.series.forEach(s=>s.points.forEach(p=>{if(p!==null&&p!==undefined)vals.push(p)}));
+  if(opts.band) opts.band.forEach(b=>{vals.push(b[0]);vals.push(b[1])});
+  if(!vals.length) vals=[0,1];
+  let lo = opts.yMin!==undefined?opts.yMin:Math.min(...vals);
+  let hi = opts.yMax!==undefined?opts.yMax:Math.max(...vals);
+  if(lo===hi){lo-=1;hi+=1}
+  const pad=(hi-lo)*0.08; lo-=pad; hi+=pad;
+  const ys = v => opts.yInvert
+      ? m.t + ih*(v-lo)/(hi-lo)
+      : m.t + ih*(1-(v-lo)/(hi-lo));
+
+  // y ticks
+  const ticks=[];
+  if(opts.yTicks){ opts.yTicks.forEach(v=>ticks.push(v)); }
+  else { const k=5; for(let i=0;i<=k;i++) ticks.push(lo+(hi-lo)*i/k); }
+
+  let svg=`<svg class="chart${isMobile?" mob":""}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${opts.aria||"chart"}">`;
+  ticks.forEach(v=>{
+    const y=ys(v);
+    svg+=`<line class="gridline" x1="${m.l}" x2="${W-m.r}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}"/>`;
+    svg+=`<text class="axis y" x="${m.l-8}" y="${(y+3.5).toFixed(1)}">${opts.yFmt?opts.yFmt(v):Math.round(v)}</text>`;
+  });
+  // how many labels actually fit, rather than a fixed count that overflows on a phone
+  const widest = Math.max(...opts.xLabels.map(l=>String(l).length), 1);
+  const perLabel = (isMobile ? 8.2 : 7.2) * widest + 12;
+  const step = Math.max(1, Math.ceil(n / Math.max(2, Math.floor(iw / perLabel))));
+  opts.xLabels.forEach((lb,i)=>{
+    if(i%step) return;
+    svg+=`<text class="axis" x="${xs(i).toFixed(1)}" y="${H-10}" text-anchor="middle">${lb}</text>`;
+  });
+
+  if(opts.band){
+    let up="",dn="";
+    opts.band.forEach((b,i)=>{ up+=`${i?"L":"M"}${xs(i).toFixed(1)},${ys(b[1]).toFixed(1)}`; });
+    for(let i=opts.band.length-1;i>=0;i--) dn+=`L${xs(i).toFixed(1)},${ys(opts.band[i][0]).toFixed(1)}`;
+    svg+=`<path d="${up}${dn}Z" fill="#ffffff" opacity="0.045"/>`;
+  }
+  if(opts.avgLine){
+    let d="";
+    opts.avgLine.forEach((v,i)=>{ d+=`${i?"L":"M"}${xs(i).toFixed(1)},${ys(v).toFixed(1)}`; });
+    svg+=`<path d="${d}" fill="none" stroke="var(--mute)" stroke-width="1.2" stroke-dasharray="4 4" opacity=".7"/>`;
+  }
+
+  const draw = s => {
+    let d="", open=false;
+    s.points.forEach((v,i)=>{
+      if(v===null||v===undefined){open=false;return}
+      d+=`${open?"L":"M"}${xs(i).toFixed(1)},${ys(v).toFixed(1)}`; open=true;
+    });
+    return d;
+  };
+  const ordered = opts.series.slice().sort((a,b)=>(a.key===sel?1:0)-(b.key===sel?1:0));
+  ordered.forEach(s=>{
+    const d=draw(s); if(!d) return;
+    const cls = "line" + (opts.noFade ? "" : (sel ? (s.key===sel?" on":" faded") : ""));
+    const wAttr = s.width ? ` stroke-width="${s.width}"` : "";
+    svg+=`<path class="${cls}" d="${d}" stroke="${s.color}"${wAttr}/>`;
+    if(opts.dots || s.dots || s.key===sel){
+      s.points.forEach((v,i)=>{ if(v===null||v===undefined)return;
+        const o = (!opts.noFade && sel && s.key!==sel) ? .14 : 1;
+        const c = (s.pointColors && s.pointColors[i]) || s.color;
+        const rr = (s.key===sel?3.6:2.4) * (isMobile?1.45:1);
+        svg+=`<circle cx="${xs(i).toFixed(1)}" cy="${ys(v).toFixed(1)}" r="${rr.toFixed(1)}" fill="${c}" opacity="${o}"/>`;});
+    }
+  });
+  svg+=`<line class="guide" id="g_${opts.id}" x1="0" x2="0" y1="${m.t}" y2="${m.t+ih}" style="opacity:0"/>`;
+  svg+=`<rect id="ov_${opts.id}" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/>`;
+  svg+=`</svg>`;
+
+  const wrap=el("div","chartwrap");
+  wrap.innerHTML=svg+`<div class="tip" id="tip_${opts.id}"></div>`;
+  const svgEl=wrap.querySelector("svg");
+
+  const tip=wrap.querySelector(".tip"), guide=wrap.querySelector(".guide");
+  const ov=wrap.querySelector(`#ov_${opts.id}`);
+  ov.style.cursor="pointer";
+
+  // "__opp" and friends are context lines, not franchises, so they aren't selectable
+  const selectable = s => !opts.noFade && s.key && !String(s.key).startsWith("__");
+
+  const idxAt = clientX => {
+    const r=svgEl.getBoundingClientRect(), k=W/r.width;
+    const x=(clientX-r.left)*k;
+    const i=Math.round((x-m.l)/(iw||1)*(n-1));
+    return Math.max(0,Math.min(n-1,i));
+  };
+
+  let pinned=null;
+  const MAXROWS = isMobile ? 6 : 14;
+
+  const showAt = i => {
+    guide.setAttribute("x1",xs(i)); guide.setAttribute("x2",xs(i));
+    guide.style.opacity="1";
+    const all=opts.series.map(s=>({s,v:s.points[i]})).filter(o=>o.v!==null&&o.v!==undefined)
+      .sort((a,b)=> opts.yInvert ? a.v-b.v : b.v-a.v);
+    const rows=all.slice(0,MAXROWS);
+    // a shortened list must never drop the team being followed
+    if(sel && !rows.some(o=>o.s.key===sel)){
+      const mine=all.find(o=>o.s.key===sel);
+      if(mine){ rows.pop(); rows.push(mine); }
+    }
+    const hidden=all.length-rows.length;
+    tip.innerHTML=
+      `<div class="th"><span>${opts.xTitle||""} ${opts.xLabels[i]}</span>`+
+      (pinned!==null?`<span class="x">tap to close</span>`:``)+`</div>`+
+      rows.map(o=>`<div class="tr${o.s.key===sel?" on":""}"`+
+        (selectable(o.s)?` data-key="${o.s.key}"`:``)+
+        `><span>${o.s.name}</span><b>${opts.tipFmt?opts.tipFmt(o.v):fmt(o.v)}</b></div>`).join("")+
+      (hidden>0?`<div class="more">+${hidden} more</div>`:``);
+    tip.style.opacity="1";
+    const r=svgEl.getBoundingClientRect(), k=W/r.width;
+    const px=xs(i)/k, tw=tip.offsetWidth||170;
+    const left = (px+14+tw > r.width) ? px-tw-14 : px+14;
+    tip.style.left=Math.max(2, Math.min(r.width-tw-2, left))+"px";
+    tip.style.top="8px";
+  };
+  const hide = ()=>{ tip.style.opacity="0"; guide.style.opacity="0"; };
+  const unpin = ()=>{ pinned=null; tip.classList.remove("pinned"); hide(); openTips.delete(unpin); };
+  const pin = i =>{ closeTips(unpin); pinned=i; tip.classList.add("pinned");
+                    openTips.add(unpin); showAt(i); };
+
+  // which line is under the cursor, so a click anywhere near it selects that team
+  const nearest = (clientX, clientY) => {
+    const r=svgEl.getBoundingClientRect(), k=W/r.width;
+    const i=idxAt(clientX), y=(clientY-r.top)*k;
+    let best=null, bd=Infinity;
+    opts.series.forEach(s=>{
+      if(!selectable(s)) return;
+      const v=s.points[i];
+      if(v===null||v===undefined) return;
+      const d=Math.abs(ys(v)-y);
+      if(d<bd){ bd=d; best=s; }
+    });
+    return bd<=(isMobile?26:22) ? best : null;
+  };
+
+  ov.addEventListener("pointermove",ev=>{
+    if(ev.pointerType==="touch"||pinned!==null) return;
+    showAt(idxAt(ev.clientX));
+  });
+  ov.addEventListener("pointerleave",ev=>{
+    if(ev.pointerType==="touch"||pinned!==null) return;
+    hide();
+  });
+
+  // No preventDefault and no touch-action:none anywhere here: a drag over the
+  // chart has to stay an ordinary page scroll. Only a stationary tap counts.
+  let tx=null, ty=null;
+  ov.addEventListener("pointerdown",ev=>{ tx=ev.clientX; ty=ev.clientY; });
+  ov.addEventListener("pointercancel",()=>{ tx=null; });
+  ov.addEventListener("pointerup",ev=>{
+    if(tx===null) return;
+    const moved=Math.hypot(ev.clientX-tx, ev.clientY-ty)>12;
+    tx=null;
+    if(moved) return;
+    if(ev.pointerType==="mouse"){
+      const s=nearest(ev.clientX,ev.clientY);
+      if(s) select(s.key===sel?null:s.key);
+      return;
+    }
+    const i=idxAt(ev.clientX);
+    if(pinned===i) unpin(); else pin(i);
+  });
+
+  // rows in a pinned tooltip are the touch route into selecting a team
+  tip.addEventListener("click",ev=>{
+    const row=ev.target.closest?ev.target.closest(".tr[data-key]"):null;
+    if(!row) return;
+    const k=row.dataset.key;
+    select(k===sel?null:k);
+  });
+
+  return wrap;
+}
+
+/* ---------- rail ---------- */
+function renderRail(){
+  const host=$("rail"); host.innerHTML="";
+  const rows = teamsOf().slice().sort((a,b)=>a.finish-b.finish);
+  rows.forEach(t=>{
+    const b=el("button","trow"); b.type="button";
+    b.setAttribute("aria-pressed", sel===t.key ? "true":"false");
+    const sw=el("span","swatch"); sw.style.background=colorOf(t.key); b.append(sw);
+    const nm=el("span","nm"); nm.append(document.createTextNode(t.name));
+    nm.append(el("span","sub", `${t.wins}-${t.losses}${t.ties?"-"+t.ties:""}   ${fmt(t.ppg)} ppg`));
+    b.title = `Luck index ${signed(t.luck_z,1)} — ${luckWord(t.luck_z)}`;
+    b.append(nm);
+    b.append(luckBar(t.luck_z));
+    b.title = `Luck index ${signed(t.luck_z,1)} — ${luckWord(t.luck_z)}`;
+    b.onclick=()=>{ if(isMobile) railOpen=false; select(sel===t.key?null:t.key); };
+    host.append(b);
+  });
+  $("clearSel").hidden = !sel;
+
+  // on a phone the list is behind a disclosure that names the current pick
+  const t = sel ? byKey(sel) : null;
+  host.classList.toggle("open", railOpen || !isMobile);
+  const tog=$("railToggle");
+  tog.setAttribute("aria-expanded", railOpen ? "true" : "false");
+  $("railWho").textContent = t ? `${t.name} · ${t.wins}-${t.losses}${t.ties?"-"+t.ties:""}`
+                               : "All teams — pick one to follow";
+  const sw=$("railSwatch");
+  sw.style.background = t ? colorOf(t.key) : "var(--dim)";
+}
+function luckBar(z){
+  const w=el("span","luckbar");
+  w.append(el("u"));
+  const mag=Math.min(Math.abs(z),3)/3*27;
+  const i=el("i");
+  i.style.width=Math.max(mag,1.5)+"px";
+  if(z>=0){ i.style.left="30px"; i.style.background="var(--lucky)"; }
+  else { i.style.left=(29-mag)+"px"; i.style.background="var(--unlucky)"; }
+  if(Math.abs(z)<0.15) i.style.background="var(--even)";
+  w.append(i);
+  return w;
+}
+
+function select(k){ sel=k; render(); }
+
+/* ---------- league view ---------- */
+function leagueView(){
+  const host=$("body"); const s=S();
+  const weeks=s.weeks;
+
+  // 1. weekly scoring
+  const p1=el("div","panel");
+  p1.append(Object.assign(el("h2",null,`Points by week, ${season}`)));
+  p1.append(el("p","note","Every team's weekly score. "+(isMobile
+    ? "Tap the chart for that week's scores, then tap a name to follow it."
+    : "Click a line, or a team on the left, to pull it forward.")));
+  p1.append(lineChart({
+    id:"wk", height:380, mHeight:320, aria:"Points scored by week",
+    xLabels:weeks.map(w=>"W"+w), xTitle:"Week",
+    series: teamsOf().map(t=>({key:t.key,name:t.name,color:colorOf(t.key),
+      points: weeks.map(w=>{const g=t.weekly.find(x=>x.week===w); return g?g.pf:null;})})),
+    avgLine: s.league_avg_by_week,
+    band: weeks.map((_,i)=>[s.league_low_by_week[i], s.league_high_by_week[i]]),
+    tipFmt:v=>fmt(v,1)
+  }));
+  p1.append(el("div","legendnote","Dashed line is the league average that week; the shaded band spans the low and high score."));
+  host.append(p1);
+
+  // 2. ppg rank across seasons
+  const p2=el("div","panel");
+  p2.append(el("h2",null,"Scoring rank by season"));
+  p2.append(el("p","note","Where each team finished in points per game, first at the top. Rank travels across years in a way raw points can't."));
+  const seasons=DATA.seasons;
+  p2.append(lineChart({
+    id:"rk", height:320, mHeight:290, yInvert:true, dots:true, aria:"Points per game rank by season",
+    xLabels:seasons, xTitle:"Season",
+    yMin:1, yMax:DATA.maxTeams, yTicks:rankTicks(DATA.maxTeams),
+    yFmt:v=>Math.round(v),
+    series: Object.entries(DATA.history).map(([k,h])=>({
+      key:k, name:h.meta.name, color:colorOf(k),
+      points: seasons.map(y=>{const r=h.line.find(l=>l.season==y); return r?r.ppg_rank:null;})})),
+    tipFmt:v=>ordinal(Math.round(v))
+  }));
+  host.append(p2);
+
+  // 3. standings + luck
+  const p3=el("div","panel");
+  p3.append(el("h2",null,`Standings and luck, ${season}`));
+  p3.append(el("p","note","Expected wins come from all-play: each week, the share of the league you outscored. The luck index is how many standard deviations your real record sits above or below that."));
+  p3.append(standingsTable());
+  host.append(p3);
+
+  // 4. head to head
+  const p4=el("div","panel");
+  p4.append(el("h2",null,"Head to head"));
+  p4.append(el("p","note","Regular-season record in each matchup. Read across the row."));
+  p4.append(h2hGrid());
+  host.append(p4);
+}
+
+function rankTicks(n){
+  const out=[1]; for(let v=Math.ceil(n/4);v<n;v+=Math.ceil(n/4)) out.push(v);
+  out.push(n); return [...new Set(out)];
+}
+
+const COLS=[
+  {k:"finish",  t:"#",       d:0, dir:1},
+  {k:"name",    t:"Team",    txt:true},
+  {k:"rec",     t:"W-L",     txt:true},
+  {k:"pf",      t:"PF",      d:1},
+  {k:"ppg",     t:"PPG",     d:1},
+  {k:"ppg_rank",t:"PPG rk",  d:0, dir:1},
+  {k:"papg",    t:"PA/g",    d:1, dir:1},
+  {k:"allplay_pct",t:"All-play", pct:true},
+  {k:"exp_wins",t:"Exp W",   d:1},
+  {k:"luck_wins",t:"±W",     d:1, sign:true},
+  {k:"luck_z",  t:"Luck",    d:1, sign:true},
+];
+
+function standingsTable(){
+  // the pinned column is always the first one, so on a phone that has to be the
+  // manager rather than the finish number
+  const cols = isMobile ? [COLS[1], ...COLS.filter((_,i)=>i!==1)] : COLS;
+  const tbl=el("table"); const thead=el("thead"); const tr=el("tr");
+  cols.forEach(c=>{
+    const th=el("th",(c.k==="name"?"":"sortable"),c.t);
+    if(c.k!=="name"){
+      th.tabIndex=0;
+      if(sortKey===c.k) th.setAttribute("aria-sort", sortDir===1?"ascending":"descending");
+      const go=()=>{ if(sortKey===c.k) sortDir*=-1; else {sortKey=c.k; sortDir=c.dir||-1;} render(); };
+      th.onclick=go; th.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}};
+    }
+    tr.append(th);
+  });
+  thead.append(tr); tbl.append(thead);
+
+  const rows=teamsOf().slice().sort((a,b)=>{
+    const av=a[sortKey], bv=b[sortKey];
+    if(typeof av==="string") return sortDir*av.localeCompare(bv);
+    return sortDir*(av-bv);
+  });
+  const tb=el("tbody");
+  rows.forEach(t=>{
+    const r=el("tr"); if(t.key===sel) r.className="on";
+    r.onclick=()=>select(sel===t.key?null:t.key);
+    const nm=el("td"); const box=el("div","tname");
+    const i=el("i"); i.style.background=colorOf(t.key); box.append(i);
+    box.append(el("span",null,t.name)); nm.append(box);
+
+    const cell={
+      finish:      ()=>el("td",null,t.finish),
+      name:        ()=>nm,
+      rec:         ()=>el("td",null,`${t.wins}-${t.losses}${t.ties?"-"+t.ties:""}`),
+      pf:          ()=>el("td",null,fmt(t.pf,1)),
+      ppg:         ()=>el("td",null,fmt(t.ppg,1)),
+      ppg_rank:    ()=>el("td",null,t.ppg_rank),
+      papg:        ()=>el("td",null,fmt(t.papg,1)),
+      allplay_pct: ()=>el("td",null,(t.allplay_pct*100).toFixed(0)+"%"),
+      exp_wins:    ()=>el("td",null,fmt(t.exp_wins,1)),
+      luck_wins:   ()=>el("td",(t.luck_wins>=0?"pos":"neg"),signed(t.luck_wins,1)),
+      luck_z:      ()=>el("td",(t.luck_z>=0?"pos":"neg"),signed(t.luck_z,1)),
+    };
+    cols.forEach(c=>r.append(cell[c.k]()));
+    tb.append(r);
+  });
+  tbl.append(tb);
+  const wrap=el("div","scrollx"); wrap.append(tbl);
+  return wrap;
+}
+
+function h2hGrid(){
+  const ts=teamsOf().slice().sort((a,b)=>a.finish-b.finish);
+  const rec={};
+  ts.forEach(t=>{ rec[t.key]={};
+    t.weekly.forEach(g=>{ if(!g.opp) return;
+      const c=rec[t.key][g.opp]||(rec[t.key][g.opp]={w:0,l:0,t:0});
+      if(g.result==="W")c.w++; else if(g.result==="L")c.l++; else if(g.result==="T")c.t++;
+    });
+  });
+  const wrap=el("div","scrollx h2h"); const tbl=el("table");
+  const hr=el("tr"); hr.append(el("th",null,""));
+  ts.forEach(t=>hr.append(el("th",null,t.abbrev||t.name.slice(0,4))));
+  const th=el("thead"); th.append(hr); tbl.append(th);
+  const tb=el("tbody");
+  ts.forEach(a=>{
+    const r=el("tr"); if(a.key===sel) r.className="on";
+    r.onclick=()=>select(sel===a.key?null:a.key);
+    const nm=el("td"); const box=el("div","tname");
+    const i=el("i"); i.style.background=colorOf(a.key); box.append(i);
+    box.append(el("span",null,a.name)); nm.append(box); r.append(nm);
+    ts.forEach(b=>{
+      if(a.key===b.key){ r.append(el("td","self","—")); return; }
+      const c=rec[a.key][b.key];
+      if(!c){ r.append(el("td","self","·")); return; }
+      const td=el("td",c.w>c.l?"w":c.l>c.w?"l":null,
+        `${c.w}-${c.l}${c.t?"-"+c.t:""}`);
+      r.append(td);
+    });
+    tb.append(r);
+  });
+  tbl.append(tb); wrap.append(tbl);
+  return wrap;
+}
+
+/* ---------- team view ---------- */
+function teamView(){
+  const host=$("body");
+  const t = sel ? byKey(sel) : null;
+  if(!t){
+    const p=el("div","panel");
+    p.append(el("h2",null,"Pick a team"));
+    p.append(el("p","note", isMobile ? "Choose a team from the picker above to see its season in detail."
+                                  : "Choose a team on the left to see its season in detail."));
+    host.append(p);
+    return;
+  }
+  const s=S(), weeks=s.weeks, n=teamsOf().length;
+
+  // headline
+  const p0=el("div","panel");
+  const agg = (DATA.history[t.key]||{}).agg || {};
+  p0.append(el("h2",null,t.name));
+  const bits=[`${season} season`];
+  bits.push(t.final_rank ? `finished ${ordinal(t.final_rank)} after playoffs, ${ordinal(t.finish)} in the regular season`
+                         : `finished ${ordinal(t.finish)} of ${n}`);
+  p0.append(el("p","note", bits.filter(Boolean).join(" · ")));
+  const grid=el("div","stats");
+  const add=(k,v,x,cls)=>{const d=el("div","stat");d.append(el("div","k",k));
+    const val=el("div","v",v); if(cls)val.classList.add(cls); d.append(val);
+    if(x)d.append(el("div","x",x)); grid.append(d);};
+  add("Record", `${t.wins}-${t.losses}${t.ties?"-"+t.ties:""}`, `${fmt(t.exp_wins,1)} wins expected`);
+  add("Final finish", t.final_rank?ordinal(t.final_rank):"—",
+      t.final_rank ? `${ordinal(t.finish)} before playoffs` : "no playoff result");
+  add("Points per game", fmt(t.ppg,1), `${ordinal(t.ppg_rank)} of ${n}`);
+  add("All-play", (t.allplay_pct*100).toFixed(0)+"%", `${fmt(t.allplay_w,0)}-${fmt(t.allplay_l,0)} vs everyone`);
+  add("Luck index", signed(t.luck_z,1), luckWord(t.luck_z), t.luck_z>=0?"pos":"neg");
+  add("Points against", fmt(t.papg,1)+"/g", `${signed(t.opp_gap,1)} vs league`, t.opp_gap>=0?"pos":"neg");
+  add("Consistency", "±"+fmt(t.sd,1),
+      `${ordinal(t.sd_rank)} steadiest · high ${fmt(t.high,1)}, low ${fmt(t.low,1)}`);
+  add("Close games", `${t.close_w}-${t.close_l}`, `decided by under ${fmt(S().thresholds.close,0)}`);
+  if(t.lineup_eff!==undefined && t.lineup_eff!==null){
+    add("Lineup efficiency", fmt(t.lineup_eff,1)+"%",
+        `${fmt(t.left_on_bench,0)} pts left on the bench`);
+    add("Checked out", t.dead_starts,
+        `started when out or on bye · ${t.acquisitions} waiver adds`,
+        t.dead_starts>=3?"neg":null);
+  }
+  if(agg.seasons>1){
+    add("Career scoring rank", fmt(agg.avg_ppg_rank,1),
+        `${fmt(agg.avg_ppg_pct,0)}th percentile over ${agg.seasons} seasons`);
+    add("Career swing", "±"+fmt(agg.rank_sd,1),
+        `best ${ordinal(agg.best_rank)}, worst ${ordinal(agg.worst_rank)}`);
+  }
+  p0.append(grid);
+  p0.append(verdict(t,n));
+  host.append(p0);
+
+  // weekly scoring vs league
+  const p1=el("div","panel");
+  p1.append(el("h2",null,"Week by week"));
+  p1.append(el("p","note","Points scored against the league's range that week. Dots are wins and losses."));
+  const games = weeks.map(w=>t.weekly.find(x=>x.week===w) || null);
+  const RES={W:"var(--win)",L:"var(--loss)"};
+  p1.append(lineChart({
+    id:"tw", height:320, mHeight:290, aria:"Weekly points", noFade:true,
+    xLabels:weeks.map(w=>"W"+w), xTitle:"Week",
+    series:[
+      {key:"__opp", name:"Opponent", color:"#78889a", width:1.2,
+       points:games.map(g=>g?g.pa:null)},
+      {key:t.key, name:t.name, color:colorOf(t.key), width:3, dots:true,
+       points:games.map(g=>g?g.pf:null),
+       pointColors:games.map(g=>g?(RES[g.result]||colorOf(t.key)):null)}],
+    avgLine:s.league_avg_by_week,
+    band:weeks.map((_,i)=>[s.league_low_by_week[i],s.league_high_by_week[i]]),
+    tipFmt:v=>fmt(v,1)
+  }));
+  p1.append(el("div","legendnote","Green dots are wins, red are losses. The thin line is the opponent's score, the dashed line the league average, and the shaded band the league's range that week."));
+  host.append(p1);
+
+  // luck ledger
+  const p2=el("div","panel");
+  p2.append(el("h2",null,"Where the wins came from"));
+  p2.append(el("p","note","\"Beat\" is how many of the other teams this score would have beaten that week. Losing a week you'd have won against most of the league is the definition of a bad break."));
+  p2.append(ledger(t,n));
+  host.append(p2);
+
+  // career
+  const hist=DATA.history[t.key];
+  if(hist && hist.line.filter(l=>l.ppg_rank).length>1){
+    const p3=el("div","panel");
+    p3.append(el("h2",null,"Every season"));
+    p3.append(el("p","note","Scoring rank against the rest of the league, year by year."));
+    p3.append(careerTable(hist));
+    host.append(p3);
+  }
+}
+
+/* ---------- scatter with a fitted trend ---------- */
+function scatterChart(pairs, opts){
+  // Both axes are 0-100 positions, so the plot area is square on purpose:
+  // stretched to a wide box, the fitted slope would read flatter than it is.
+  const W = isMobile ? 360 : 458;
+  const m = isMobile ? {t:10,r:10,b:56,l:56} : {t:14,r:16,b:58,l:62};
+  const iw = W-m.l-m.r;
+  const ih = iw;                                  // kept square, see note above
+  const H  = ih+m.t+m.b;
+  const xs=v=>m.l+iw*v/100, ys=v=>m.t+ih*v/100;   // both axes: 0 = best, at top/left
+
+  let svg=`<svg class="chart${isMobile?" mob":""}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${opts.aria}">`;
+  [0,25,50,75,100].forEach(v=>{
+    svg+=`<line class="gridline" x1="${m.l}" x2="${W-m.r}" y1="${ys(v)}" y2="${ys(v)}"/>`;
+    svg+=`<line class="gridline" y1="${m.t}" y2="${m.t+ih}" x1="${xs(v)}" x2="${xs(v)}"/>`;
+  });
+
+  // trend line, least squares on the normalised positions
+  const n=pairs.length;
+  let r=null;
+  if(n>=4){
+    const mx=pairs.reduce((s,p)=>s+p.x,0)/n, my=pairs.reduce((s,p)=>s+p.y,0)/n;
+    let sxy=0,sxx=0,syy=0;
+    pairs.forEach(p=>{const a=p.x-mx,b=p.y-my; sxy+=a*b; sxx+=a*a; syy+=b*b;});
+    if(sxx>0 && syy>0){
+      r=sxy/Math.sqrt(sxx*syy);
+      const slope=sxy/sxx, at=v=>my+slope*(v-mx);
+      const y0=Math.max(-8,Math.min(108,at(0))), y1=Math.max(-8,Math.min(108,at(100)));
+      svg+=`<line x1="${xs(0)}" y1="${ys(y0).toFixed(1)}" x2="${xs(100)}" y2="${ys(y1).toFixed(1)}"
+            stroke="var(--mute)" stroke-width="1.6" stroke-dasharray="6 4" opacity=".8"/>`;
+    }
+  }
+
+  const rk = isMobile ? 1.4 : 1;
+  pairs.forEach((p,i)=>{
+    const on = sel && p.key===sel;
+    const cur = String(p.season)===String(season);
+    const op = sel ? (on?1:.16) : (cur?1:.42);
+    svg+=`<circle class="dot" data-i="${i}" cx="${xs(p.x).toFixed(1)}" cy="${ys(p.y).toFixed(1)}"
+          r="${((on?7:cur?5.5:4)*rk).toFixed(1)}" fill="${colorOf(p.key)}" opacity="${op}"
+          ${cur&&!sel?'stroke="var(--ink)" stroke-width="1"':""}/>`;
+  });
+  // a finger is far bigger than a 5px dot, so each point gets an invisible target
+  if(isMobile) pairs.forEach((p,i)=>{
+    svg+=`<circle class="hitdot" data-i="${i}" cx="${xs(p.x).toFixed(1)}" cy="${ys(p.y).toFixed(1)}"
+          r="15" fill="transparent"/>`;
+  });
+
+  const lab=(x,y,t,anchor)=>`<text class="axis" x="${x}" y="${y}" text-anchor="${anchor}">${t}</text>`;
+  svg+=lab(m.l, H-32, "First pick", "start");
+  svg+=lab(W-m.r, H-32, "Last pick", "end");
+  svg+=lab(W/2, H-10, "Draft slot", "middle");
+  // the phone's left margin can't hold "Champion" without colliding with the axis title
+  svg+=`<text class="axis" x="${m.l-8}" y="${ys(0)+4}" text-anchor="end">${isMobile?"Best":"Champion"}</text>`;
+  svg+=`<text class="axis" x="${m.l-8}" y="${ys(100)+4}" text-anchor="end">Last</text>`;
+  svg+=`<text class="axis" transform="translate(${isMobile?13:14},${m.t+ih/2}) rotate(-90)" text-anchor="middle">Final finish</text>`;
+  svg+="</svg>";
+
+  const wrap=el("div","chartwrap");
+  wrap.innerHTML=svg+`<div class="tip" id="tip_sc"></div>`;
+  const tip=wrap.querySelector(".tip");
+  let pinned=false;
+  const unpin=()=>{ pinned=false; tip.classList.remove("pinned");
+                    tip.style.opacity="0"; openTips.delete(unpin); };
+
+  const showFor = p => {
+    tip.innerHTML=`<div class="th"><span>${p.name} · ${p.season}</span></div>`+
+      `<div class="tr"><span>Draft slot</span><b>${ordinal(p.slot)} of ${p.n}</b></div>`+
+      `<div class="tr"><span>Final finish</span><b>${ordinal(p.final)} of ${p.n}</b></div>`+
+      (pinned?`<div class="tr" data-key="${p.key}"><span>Follow ${p.name}</span><b>→</b></div>`:``);
+    tip.style.opacity="1";
+    const rc=wrap.getBoundingClientRect(), k=rc.width/W;
+    const px=xs(p.x)*k, tw=tip.offsetWidth||170;
+    tip.style.left=Math.max(2, Math.min(rc.width-tw-2,
+      px+12+tw>rc.width ? px-tw-12 : px+12))+"px";
+    tip.style.top=Math.max(4, ys(p.y)*k-30)+"px";
+  };
+
+  const bind = c => {
+    const p=pairs[+c.dataset.i];
+    c.style.cursor="pointer";
+    let tx=null, ty=null;
+    c.addEventListener("pointerenter",ev=>{ if(ev.pointerType!=="touch" && !pinned) showFor(p); });
+    c.addEventListener("pointerleave",ev=>{ if(ev.pointerType!=="touch" && !pinned) tip.style.opacity="0"; });
+    c.addEventListener("pointerdown",ev=>{ tx=ev.clientX; ty=ev.clientY; });
+    c.addEventListener("pointercancel",()=>{ tx=null; });
+    c.addEventListener("pointerup",ev=>{
+      if(tx===null) return;
+      const moved=Math.hypot(ev.clientX-tx, ev.clientY-ty)>12;
+      tx=null;
+      if(moved) return;
+      if(ev.pointerType==="mouse"){ select(sel===p.key?null:p.key); return; }
+      closeTips(unpin);
+      pinned=true; tip.classList.add("pinned"); openTips.add(unpin);
+      showFor(p);
+    });
+  };
+  wrap.querySelectorAll(".dot").forEach(bind);
+  wrap.querySelectorAll(".hitdot").forEach(bind);
+
+  tip.addEventListener("click",ev=>{
+    const row=ev.target.closest?ev.target.closest(".tr[data-key]"):null;
+    if(!row) return;
+    select(sel===row.dataset.key?null:row.dataset.key);
+  });
+  return {node:wrap, r:r, n:n};
+}
+
+function draftPairs(){
+  const out=[];
+  Object.entries(DATA.history).forEach(([k,h])=>{
+    h.line.forEach(l=>{
+      if(!l.draft_slot || !l.final_rank || !l.n_teams || l.n_teams<2) return;
+      out.push({key:k, name:h.meta.name, season:l.season, n:l.n_teams,
+                slot:l.draft_slot, final:l.final_rank,
+                x:100*(l.draft_slot-1)/(l.n_teams-1),
+                y:100*(l.final_rank-1)/(l.n_teams-1)});
+    });
+  });
+  return out;
+}
+
+function readTrend(r,n){
+  if(r===null) return `Not enough drafted seasons yet to say anything (${n} points).`;
+  const strength=Math.abs(r)<0.15?"essentially nothing"
+                :Math.abs(r)<0.35?"a weak tendency"
+                :Math.abs(r)<0.6?"a moderate tendency":"a strong tendency";
+  const dir=Math.abs(r)<0.15?"":r>0?", with earlier picks finishing better":
+                                     ", with later picks finishing better";
+  return `Across ${n} team-seasons the correlation is ${signed(r,2)} — ${strength}${dir}. `+
+         `Both axes are position within that year's league, because the league has run `+
+         `14, 13 and 12 teams and a raw pick number doesn't mean the same thing across those.`;
+}
+
+/* ---------- advanced view ---------- */
+function advancedView(){
+  const host=$("body"), s=S(), n=s.n_teams;
+
+  // 1. who the schedule actually decided
+  const p1=el("div","panel");
+  p1.append(el("h2",null,`Who the schedule decided, ${season}`));
+  p1.append(el("p","note",`The top ${s.playoff_teams} on all-play are the teams that scored their way in. Anyone marked gifted or robbed had their season settled by the draw rather than the scoring.`));
+  p1.append(simpleTable(
+    ["Manager","Made playoffs","Deserved on all-play","All-play","Reg finish","Final","Verdict"],
+    teamsOf().slice().sort((a,b)=>b.allplay_pct-a.allplay_pct).map(t=>({
+      key:t.key,
+      cells:[nameCell(t),
+             {v:t.made_playoffs?"yes":"no", cls:t.made_playoffs?"w":null},
+             {v:t.allplay_playoffs?"yes":"no", cls:t.allplay_playoffs?"w":null},
+             {v:(t.allplay_pct*100).toFixed(0)+"%"},
+             {v:ordinal(t.finish)},
+             {v:t.final_rank?ordinal(t.final_rank):"—"},
+             {v:t.playoff_swing==="gifted"?"handed a spot":t.playoff_swing==="robbed"?"squeezed out":"",
+              cls:t.playoff_swing==="gifted"?"pos":t.playoff_swing==="robbed"?"neg":null}]
+    }))));
+  host.append(p1);
+
+  // 2. consistency
+  const p2=el("div","panel");
+  p2.append(el("h2",null,"Consistency"));
+  p2.append(el("p","note","How much a manager's weekly score moves around. The spread is in points; the relative column divides it by their average, so a low scorer isn't flattered for having less room to swing."));
+  p2.append(simpleTable(
+    ["Manager","PPG","Week-to-week spread","Relative","Steadiest","High","Low","Range"],
+    teamsOf().slice().sort((a,b)=>a.sd-b.sd).map(t=>({
+      key:t.key,
+      cells:[nameCell(t),{v:fmt(t.ppg,1)},{v:"±"+fmt(t.sd,1)},{v:fmt(t.cv,1)+"%"},
+             {v:ordinal(t.sd_rank)},{v:fmt(t.high,1)},{v:fmt(t.low,1)},
+             {v:fmt(t.high-t.low,1)}]
+    }))));
+  host.append(p2);
+
+  // 3. career scoring rank
+  const careers=Object.entries(DATA.history)
+    .filter(([,h])=>h.agg.seasons>0)
+    .sort((a,b)=>a[1].agg.avg_ppg_rank-b[1].agg.avg_ppg_rank);
+  if(careers.length && DATA.seasons.length>1){
+    const p3=el("div","panel");
+    p3.append(el("h2",null,"Career scoring rank"));
+    p3.append(el("p","note","Average finish in points per game across every season, with the percentile version alongside so league-size changes don't distort it. Swing is how much that rank bounces year to year."));
+    p3.append(simpleTable(
+      ["Manager","Seasons","Avg scoring rank","Percentile","Swing","Best","Worst","Avg spread","Playoffs","Titles","Avg luck"],
+      careers.map(([k,h])=>({
+        key:k,
+        cells:[nameCell({key:k,name:h.meta.name}),
+               {v:h.agg.seasons},{v:fmt(h.agg.avg_ppg_rank,2)},{v:fmt(h.agg.avg_ppg_pct,0)},
+               {v:"±"+fmt(h.agg.rank_sd,1)},{v:ordinal(h.agg.best_rank)},{v:ordinal(h.agg.worst_rank)},
+               {v:"±"+fmt(h.agg.avg_sd,1)},{v:h.agg.playoff_apps},{v:h.agg.titles||""},
+               {v:signed(h.agg.avg_luck,1),cls:h.agg.avg_luck>=0?"pos":"neg"}]
+      }))));
+    host.append(p3);
+  }
+
+  // 4. weekly breaks
+  const p4=el("div","panel");
+  p4.append(el("h2",null,"Breaks and coin flips"));
+  p4.append(el("p","note",`Gifted wins came with a score that would normally have lost. Robbed losses came with a score that would normally have won. Close games were decided by under ${fmt(s.thresholds.close,0)} points.`));
+  p4.append(simpleTable(
+    ["Manager","Record","Gifted wins","Robbed losses","Net breaks","Close games","Exp wins","Wins above"],
+    teamsOf().slice().sort((a,b)=>(b.gifted-b.robbed)-(a.gifted-a.robbed)).map(t=>{
+      const net=t.gifted-t.robbed;
+      return {key:t.key, cells:[nameCell(t),
+        {v:`${t.wins}-${t.losses}${t.ties?"-"+t.ties:""}`},
+        {v:t.gifted||""},{v:t.robbed||""},
+        {v:net?signed(net,0):"0", cls:net>0?"pos":net<0?"neg":null},
+        {v:`${t.close_w}-${t.close_l}`},
+        {v:fmt(t.exp_wins,1)},
+        {v:signed(t.luck_wins,1), cls:t.luck_wins>=0?"pos":"neg"}]};
+    })));
+  host.append(p4);
+
+  // 5. manager skill, only when the extra endpoints came back
+  if(s.has_extras){
+    const p5=el("div","panel");
+    p5.append(el("h2",null,"Lineup management"));
+    p5.append(el("p","note","Optimal is the best legal lineup available from the roster that week, bench included. Efficiency is what was actually started as a share of that. Points left behind is the season total."));
+    p5.append(simpleTable(
+      ["Manager","Efficiency","Started","Optimal","Left on bench","Per week","Rank"],
+      teamsOf().slice().sort((a,b)=>b.lineup_eff-a.lineup_eff).map(t=>({
+        key:t.key,
+        cells:[nameCell(t),
+               {v:fmt(t.lineup_eff,1)+"%"},
+               {v:fmt(t.started_pts,0)},{v:fmt(t.optimal_pts,0)},
+               {v:fmt(t.left_on_bench,1)},{v:fmt(t.bench_per_week,1)},
+               {v:ordinal(t.lineup_eff_rank)}]
+      }))));
+    host.append(p5);
+
+    const p6=el("div","panel");
+    p6.append(el("h2",null,"Who checked out"));
+    p6.append(el("p","note","ESPN doesn't keep a historical injury designation, so a player who was ruled out is spotted a different way: he was projected for nothing and scored nothing. Someone projected normally who scored nothing just busted, and that's a different failing. Waiver moves are the other half of the picture."));
+    p6.append(simpleTable(
+      ["Manager","Started someone out","Zero-point starts","Busts","Waiver adds","Drops","Trades","Efficiency"],
+      teamsOf().slice().sort((a,b)=>(b.dead_starts-a.dead_starts)
+                                 || (a.acquisitions-b.acquisitions)).map(t=>({
+        key:t.key,
+        cells:[nameCell(t),
+               {v:t.dead_starts, cls:t.dead_starts>=3?"neg":null},
+               {v:t.zero_starts},{v:t.busts},
+               {v:t.acquisitions, cls:t.acquisitions===0?"neg":null},
+               {v:t.drops},{v:t.trades||""},
+               {v:fmt(t.lineup_eff,1)+"%"}]
+      }))));
+    host.append(p6);
+
+    if(teamsOf().some(t=>t.draft_slot)){
+      const p7=el("div","panel");
+      p7.append(el("h2",null,"Draft slot against results"));
+      p7.append(el("p","note","Where each pick landed, and whether it mattered. The table is this season; the chart pools every drafted season in the league's history."));
+      const split=el("div","split");
+
+      const left=el("div");
+      left.append(simpleTable(
+        ["Manager","Slot","Scoring","Final"],
+        teamsOf().slice().filter(t=>t.draft_slot)
+          .sort((a,b)=>a.draft_slot-b.draft_slot).map(t=>({
+          key:t.key,
+          cells:[nameCell(t),{v:ordinal(t.draft_slot)},{v:ordinal(t.ppg_rank)},
+                 {v:t.final_rank?ordinal(t.final_rank):"—"}]
+        })), true));
+      const thisYear=draftCorrelation();
+      if(thisYear) left.append(el("div","legendnote",thisYear));
+      split.append(left);
+
+      const pairs=draftPairs();
+      const right=el("div","scatterside");
+      if(pairs.length>=4){
+        const sc=scatterChart(pairs,{aria:"Draft slot against final finish"});
+        right.append(sc.node);
+        right.append(el("div","legendnote",readTrend(sc.r,sc.n)));
+        right.append(el("div","legendnote",
+          sel ? "Highlighted points are the selected manager."
+              : `Ringed points are ${season}; the rest are earlier seasons.`));
+      } else {
+        right.append(el("div","empty","Not enough drafted seasons to plot yet."));
+      }
+      split.append(right);
+
+      p7.append(split);
+      host.append(p7);
+    }
+  } else {
+    const p5=el("div","panel");
+    p5.append(el("h2",null,"Manager metrics unavailable"));
+    p5.append(el("p","note",`No lineup or draft data came back for ${season}. Re-run with --refresh, or check espn_probe2.py against this season.`));
+    host.append(p5);
+  }
+}
+
+function draftCorrelation(){
+  const rows=teamsOf().filter(t=>t.draft_slot && t.final_rank);
+  if(rows.length<4) return "";
+  const r=pearson(rows.map(t=>t.draft_slot), rows.map(t=>t.final_rank));
+  if(r===null) return "";
+  return `${season} alone: ${signed(r,2)}. A single season of ${rows.length} teams is far too small to read anything into.`;
+}
+
+function pearson(a,b){
+  const n=a.length; if(n<3) return null;
+  const ma=a.reduce((x,y)=>x+y,0)/n, mb=b.reduce((x,y)=>x+y,0)/n;
+  let num=0, da=0, db=0;
+  for(let i=0;i<n;i++){ const x=a[i]-ma, y=b[i]-mb; num+=x*y; da+=x*x; db+=y*y; }
+  return (da&&db) ? num/Math.sqrt(da*db) : null;
+}
+
+function nameCell(t){
+  return {node:()=>{ const box=el("div","tname"); const i=el("i");
+    i.style.background=colorOf(t.key); box.append(i);
+    box.append(el("span",null,t.name)); return box; }};
+}
+
+function simpleTable(headers, rows, compact){
+  const tbl=el("table"), th=el("thead"), hr=el("tr");
+  headers.forEach(h=>hr.append(el("th",null,h)));
+  th.append(hr); tbl.append(th);
+  const tb=el("tbody");
+  rows.forEach(r=>{
+    const tr=el("tr"); if(r.key===sel) tr.className="on";
+    if(r.key) tr.onclick=()=>select(sel===r.key?null:r.key);
+    r.cells.forEach(c=>{
+      const td=el("td", c.cls||null);
+      if(c.node) td.append(c.node()); else td.textContent=c.v;
+      tr.append(td);
+    });
+    tb.append(tr);
+  });
+  tbl.append(tb);
+  if(compact) return tbl;                        // fits its column, no scroller
+  const wrap=el("div","scrollx h2h"); wrap.append(tbl);  // wide tables scroll sideways
+  return wrap;
+}
+
+function verdict(t,n){
+  const p=el("p","verdict");
+  const gap=t.luck_wins;
+  const dir = gap>=0 ? "more" : "fewer";
+  p.innerHTML =
+    `Scored like the <b>${ordinal(t.ppg_rank)}</b>-best team and beat <b>${(t.allplay_pct*100).toFixed(0)}%</b> of the league on a typical week, ` +
+    `which is worth about <b>${fmt(t.exp_wins,1)}</b> wins. Actually won <b>${fmt(t.wins+0.5*t.ties,1)}</b> — ` +
+    `<b class="${gap>=0?"pos":"neg"}">${signed(gap,1)}</b> ${dir} than the scoring earned. ` +
+    `That is a luck index of <b class="${t.luck_z>=0?"pos":"neg"}">${signed(t.luck_z,1)}</b>, ${luckWord(t.luck_z)}. ` +
+    `Opponents averaged <b>${fmt(t.papg,1)}</b> against, ${t.opp_gap>=0?"below":"above"} the league's ${fmt(t.papg+t.opp_gap,1)}.`;
+  return p;
+}
+
+function ledger(t,n){
+  const tbl=el("table");
+  const hr=el("tr");
+  ["Week","Opponent","You","Them","Result","Beat","Break"].forEach(h=>hr.append(el("th",null,h)));
+  const th=el("thead"); th.append(hr); tbl.append(th);
+  const tb=el("tbody");
+  t.weekly.forEach(g=>{
+    const r=el("tr");
+    const beat = Math.round(g.allplay_p*(n-1));
+    let brk="", cls=null;
+    if(g.result==="W" && g.allplay_p<0.35){ brk="lucky win"; cls="pos"; }
+    else if(g.result==="L" && g.allplay_p>0.65){ brk="robbed"; cls="neg"; }
+    r.append(el("td",null,"W"+g.week));
+    r.append(el("td",null,g.opp_name||"—"));
+    r.append(el("td",null,fmt(g.pf,1)));
+    r.append(el("td",null,g.pa===null?"—":fmt(g.pa,1)));
+    r.append(el("td",g.result==="W"?"w":g.result==="L"?"l":null,g.result));
+    r.append(el("td",null,`${beat} of ${n-1}`));
+    r.append(el("td",cls,brk));
+    tb.append(r);
+  });
+  tbl.append(tb);
+  const wrap=el("div","scrollx"); wrap.append(tbl);
+  return wrap;
+}
+
+function careerTable(hist){
+  const tbl=el("table");
+  const hr=el("tr");
+  ["Season","PPG","Scoring rank","Pctile","±/wk","All-play","Reg","Final","Luck"]
+    .forEach(h=>hr.append(el("th",null,h)));
+  const th=el("thead"); th.append(hr); tbl.append(th); const tb=el("tbody");
+  hist.line.forEach(l=>{
+    if(l.ppg_rank===null) return;
+    const r=el("tr");
+    r.onclick=()=>{ season=String(l.season); $("seasonSel").value=season; render(); };
+    r.append(el("td",null,l.season));
+    r.append(el("td",null,fmt(l.ppg,1)));
+    r.append(el("td",null,ordinal(l.ppg_rank)));
+    r.append(el("td",null,fmt(l.ppg_pct,0)));
+    r.append(el("td",null,"±"+fmt(l.sd,1)));
+    r.append(el("td",null,(l.allplay_pct*100).toFixed(0)+"%"));
+    r.append(el("td",null,ordinal(l.finish)));
+    r.append(el("td",l.final_rank===1?"pos":null,l.final_rank?ordinal(l.final_rank):"—"));
+    r.append(el("td",l.luck_z>=0?"pos":"neg",signed(l.luck_z,1)));
+    tb.append(r);
+  });
+  const a=hist.agg||{};
+  if(a.seasons>1){
+    const f=el("tr"); f.style.borderTop="2px solid var(--line)";
+    f.append(el("td",null,`${a.seasons} seasons`));
+    f.append(el("td",null,fmt(a.avg_ppg,1)));
+    f.append(el("td",null,fmt(a.avg_ppg_rank,2)));
+    f.append(el("td",null,fmt(a.avg_ppg_pct,0)));
+    f.append(el("td",null,"±"+fmt(a.avg_sd,1)));
+    f.append(el("td",null,(a.avg_allplay*100).toFixed(0)+"%"));
+    f.append(el("td",null,`${a.playoff_apps} playoffs`));
+    f.append(el("td",null,a.avg_final?fmt(a.avg_final,1):"—"));
+    f.append(el("td",a.avg_luck>=0?"pos":"neg",signed(a.avg_luck,1)));
+    [...f.children].forEach(c=>c.style.color=c.style.color||"var(--mute)");
+    tb.append(f);
+  }
+  tbl.append(tb);
+  const wrap=el("div","scrollx"); wrap.append(tbl);
+  return wrap;
+}
+
+/* ---------- render ---------- */
+function render(){
+  $("vLeague").setAttribute("aria-pressed", view==="league");
+  $("vTeam").setAttribute("aria-pressed", view==="team");
+  $("vAdv").setAttribute("aria-pressed", view==="advanced");
+  $("body").innerHTML="";
+  openTips.clear();          // the old charts are about to be thrown away
+  renderRail();
+  if(view==="league") leagueView();
+  else if(view==="team") teamView();
+  else advancedView();
+}
+
+function boot(data){
+  DATA=data;
+  // stable colour per franchise, ordered by best all-time scoring rank
+  const keys=Object.keys(DATA.history).sort((a,b)=>{
+    const m=h=>Math.min(...DATA.history[h].line.filter(l=>l.ppg_rank).map(l=>l.ppg_rank),99);
+    return m(a)-m(b);
+  });
+  DATA.colorIndex={}; keys.forEach((k,i)=>DATA.colorIndex[k]=i);
+  DATA.maxTeams=Math.max(...DATA.seasons.map(s=>DATA.data[s].teams.length));
+
+  season=DATA.seasons[DATA.seasons.length-1];
+  const sel2=$("seasonSel"); sel2.innerHTML="";
+  DATA.seasons.slice().reverse().forEach(s=>{
+    const o=document.createElement("option"); o.value=s; o.textContent=s; sel2.append(o);
+  });
+  sel2.value=season;
+  sel2.onchange=()=>{season=sel2.value; render();};
+  $("brand").firstChild.textContent=DATA.league_name;
+  $("sub").textContent=`${DATA.seasons[0]}–${DATA.seasons[DATA.seasons.length-1]} · ${Object.keys(DATA.teams).length} franchises`;
+  $("vLeague").onclick=()=>{view="league";render()};
+  $("vTeam").onclick=()=>{view="team";render()};
+  $("vAdv").onclick=()=>{view="advanced";render()};
+  $("clearSel").onclick=()=>select(null);
+  $("railToggle").onclick=()=>{ railOpen=!railOpen; renderRail(); };
+
+  // crossing the phone breakpoint changes the chart viewBox, so redraw
+  const onBreak=e=>{ isMobile=e.matches; railOpen=false; render(); };
+  if(PHONE.addEventListener) PHONE.addEventListener("change",onBreak);
+  else PHONE.addListener(onBreak);
+
+  // a tap anywhere outside a chart dismisses whatever tooltip is pinned
+  document.addEventListener("pointerdown",ev=>{
+    if(ev.target.closest && ev.target.closest(".chartwrap")) return;
+    closeTips(null);
+  });
+
+  render();
+}
+
+if(EMBEDDED){ boot(EMBEDDED); }
+else {
+  fetch("/api/history").then(r=>r.json()).then(boot).catch(()=>{
+    $("sub").textContent="can't reach league_dashboard.py — is it still running?";
+  });
+}
+</script>
+</body>
+</html>
