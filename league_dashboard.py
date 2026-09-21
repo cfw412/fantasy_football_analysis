@@ -585,6 +585,10 @@ def build_payload(seasons, refresh=False, only=None, extras=True):
                 "name": m["name"] if m else None,
                 "team_name": m["team_name"] if m else None,
                 "lineup_eff": m.get("lineup_eff") if m else None,
+                "started_pts": m.get("started_pts") if m else None,
+                "optimal_pts": m.get("optimal_pts") if m else None,
+                "left_on_bench": m.get("left_on_bench") if m else None,
+                "weeks_covered": m.get("weeks_covered") if m else None,
                 "dead_starts": m.get("dead_starts") if m else None,
                 "acquisitions": m.get("acquisitions") if m else None,
                 "draft_slot": m.get("draft_slot") if m else None,
@@ -613,13 +617,26 @@ def build_payload(seasons, refresh=False, only=None, extras=True):
             })
             withx = [l for l in played if l.get("lineup_eff") is not None]
             if withx:
+                total_started = sum(l["started_pts"] or 0 for l in withx)
+                total_optimal = sum(l["optimal_pts"] or 0 for l in withx)
+                total_bench = sum(l["left_on_bench"] or 0 for l in withx)
+                total_weeks = sum(l["weeks_covered"] or 0 for l in withx)
+                eff_values = [l["lineup_eff"] for l in withx]
                 agg.update({
-                    "avg_lineup_eff": round(statistics.fmean(
-                        [l["lineup_eff"] for l in withx]), 1),
+                    "avg_lineup_eff": round(statistics.fmean(eff_values), 1),
                     "total_dead_starts": sum(l["dead_starts"] or 0 for l in withx),
                     "avg_acquisitions": round(statistics.fmean(
                         [l["acquisitions"] or 0 for l in withx]), 1),
                     "extras_seasons": len(withx),
+                    "career_lineup_eff": round(total_started / total_optimal * 100, 1)
+                        if total_optimal else 0.0,
+                    "career_started_pts": round(total_started, 2),
+                    "career_optimal_pts": round(total_optimal, 2),
+                    "career_left_on_bench": round(total_bench, 2),
+                    "career_bench_per_week": round(total_bench / total_weeks, 2)
+                        if total_weeks else 0.0,
+                    "best_lineup_eff": max(eff_values),
+                    "worst_lineup_eff": min(eff_values),
                 })
         history[key] = {"meta": meta, "line": line, "agg": agg}
 

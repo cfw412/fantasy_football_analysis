@@ -938,6 +938,33 @@ function advancedView(){
     host.append(p3);
   }
 
+  // 3b. career lineup management
+  const lineupCareers=Object.entries(DATA.history)
+    .filter(([,h])=>h.agg.extras_seasons>0)
+    .sort((a,b)=>b[1].agg.career_lineup_eff-a[1].agg.career_lineup_eff);
+  if(lineupCareers.length && DATA.seasons.length>1){
+    const p3b=el("div","panel");
+    p3b.append(el("h2",null,"Career lineup management"));
+    p3b.append(el("p","note","Same idea as lineup management, totaled over every season on record. Efficiency here is total points started divided by total points optimal, not an average of each season's percentage, so a few weak seasons carry the weight they actually scored."));
+    p3b.append(simpleTable(
+      ["Manager","Seasons","Efficiency","Started","Optimal","Left on bench","Per week","Best season","Worst season","Dead starts","Rank"],
+      lineupCareers.map(([k,h],i)=>({
+        key:k,
+        cells:[nameCell({key:k,name:h.meta.name}),
+               {v:h.agg.extras_seasons},
+               {v:fmt(h.agg.career_lineup_eff,1)+"%"},
+               {v:fmt(h.agg.career_started_pts,0)},
+               {v:fmt(h.agg.career_optimal_pts,0)},
+               {v:fmt(h.agg.career_left_on_bench,0)},
+               {v:fmt(h.agg.career_bench_per_week,1)},
+               {v:fmt(h.agg.best_lineup_eff,1)+"%"},
+               {v:fmt(h.agg.worst_lineup_eff,1)+"%"},
+               {v:h.agg.total_dead_starts},
+               {v:ordinal(i+1)}]
+      }))));
+    host.append(p3b);
+  }
+
   // 4. weekly breaks
   const p4=el("div","panel");
   p4.append(el("h2",null,"Breaks and coin flips"));
