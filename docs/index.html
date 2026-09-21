@@ -884,66 +884,13 @@ function readTrend(r,n){
 function advancedView(){
   const host=$("body"), s=S(), n=s.n_teams;
 
-  // 1. who the schedule actually decided
-  const p1=el("div","panel");
-  p1.append(el("h2",null,`Who the schedule decided, ${season}`));
-  p1.append(el("p","note",`The top ${s.playoff_teams} on all-play are the teams that scored their way in. Anyone marked gifted or robbed had their season settled by the draw rather than the scoring.`));
-  p1.append(simpleTable(
-    ["Manager","Made playoffs","Deserved on all-play","All-play","Reg finish","Final","Verdict"],
-    teamsOf().slice().sort((a,b)=>b.allplay_pct-a.allplay_pct).map(t=>({
-      key:t.key,
-      cells:[nameCell(t),
-             {v:t.made_playoffs?"yes":"no", cls:t.made_playoffs?"w":null},
-             {v:t.allplay_playoffs?"yes":"no", cls:t.allplay_playoffs?"w":null},
-             {v:(t.allplay_pct*100).toFixed(0)+"%"},
-             {v:ordinal(t.finish)},
-             {v:t.final_rank?ordinal(t.final_rank):"—"},
-             {v:t.playoff_swing==="gifted"?"handed a spot":t.playoff_swing==="robbed"?"squeezed out":"",
-              cls:t.playoff_swing==="gifted"?"pos":t.playoff_swing==="robbed"?"neg":null}]
-    }))));
-  host.append(p1);
-
-  // 2. consistency
-  const p2=el("div","panel");
-  p2.append(el("h2",null,"Consistency"));
-  p2.append(el("p","note","How much a manager's weekly score moves around. The spread is in points; the relative column divides it by their average, so a low scorer isn't flattered for having less room to swing."));
-  p2.append(simpleTable(
-    ["Manager","PPG","Week-to-week spread","Relative","Steadiest","High","Low","Range"],
-    teamsOf().slice().sort((a,b)=>a.sd-b.sd).map(t=>({
-      key:t.key,
-      cells:[nameCell(t),{v:fmt(t.ppg,1)},{v:"±"+fmt(t.sd,1)},{v:fmt(t.cv,1)+"%"},
-             {v:ordinal(t.sd_rank)},{v:fmt(t.high,1)},{v:fmt(t.low,1)},
-             {v:fmt(t.high-t.low,1)}]
-    }))));
-  host.append(p2);
-
-  // 3. career scoring rank
-  const careers=Object.entries(DATA.history)
-    .filter(([,h])=>h.agg.seasons>0)
-    .sort((a,b)=>a[1].agg.avg_ppg_rank-b[1].agg.avg_ppg_rank);
-  if(careers.length && DATA.seasons.length>1){
-    const p3=el("div","panel");
-    p3.append(el("h2",null,"Career scoring rank"));
-    p3.append(el("p","note","Average finish in points per game across every season, with the percentile version alongside so league-size changes don't distort it. Swing is how much that rank bounces year to year."));
-    p3.append(simpleTable(
-      ["Manager","Seasons","Avg scoring rank","Percentile","Swing","Best","Worst","Avg spread","Playoffs","Titles","Avg luck"],
-      careers.map(([k,h])=>({
-        key:k,
-        cells:[nameCell({key:k,name:h.meta.name}),
-               {v:h.agg.seasons},{v:fmt(h.agg.avg_ppg_rank,2)},{v:fmt(h.agg.avg_ppg_pct,0)},
-               {v:"±"+fmt(h.agg.rank_sd,1)},{v:ordinal(h.agg.best_rank)},{v:ordinal(h.agg.worst_rank)},
-               {v:"±"+fmt(h.agg.avg_sd,1)},{v:h.agg.playoff_apps},{v:h.agg.titles||""},
-               {v:signed(h.agg.avg_luck,1),cls:h.agg.avg_luck>=0?"pos":"neg"}]
-      }))));
-    host.append(p3);
-  }
-
-  // 3b. career lineup management
+  // career lineup management
   const lineupCareers=Object.entries(DATA.history)
     .filter(([,h])=>h.agg.extras_seasons>0)
     .sort((a,b)=>b[1].agg.career_lineup_eff-a[1].agg.career_lineup_eff);
+  let p3b=null;
   if(lineupCareers.length && DATA.seasons.length>1){
-    const p3b=el("div","panel");
+    p3b=el("div","panel");
     p3b.append(el("h2",null,"Career lineup management"));
     p3b.append(el("p","note","Same idea as lineup management, totaled over every season on record. Efficiency here is total points started divided by total points optimal, not an average of each season's percentage, so a few weak seasons carry the weight they actually scored."));
     p3b.append(simpleTable(
@@ -962,30 +909,12 @@ function advancedView(){
                {v:h.agg.total_dead_starts},
                {v:ordinal(i+1)}]
       }))));
-    host.append(p3b);
   }
 
-  // 4. weekly breaks
-  const p4=el("div","panel");
-  p4.append(el("h2",null,"Breaks and coin flips"));
-  p4.append(el("p","note",`Gifted wins came with a score that would normally have lost. Robbed losses came with a score that would normally have won. Close games were decided by under ${fmt(s.thresholds.close,0)} points.`));
-  p4.append(simpleTable(
-    ["Manager","Record","Gifted wins","Robbed losses","Net breaks","Close games","Exp wins","Wins above"],
-    teamsOf().slice().sort((a,b)=>(b.gifted-b.robbed)-(a.gifted-a.robbed)).map(t=>{
-      const net=t.gifted-t.robbed;
-      return {key:t.key, cells:[nameCell(t),
-        {v:`${t.wins}-${t.losses}${t.ties?"-"+t.ties:""}`},
-        {v:t.gifted||""},{v:t.robbed||""},
-        {v:net?signed(net,0):"0", cls:net>0?"pos":net<0?"neg":null},
-        {v:`${t.close_w}-${t.close_l}`},
-        {v:fmt(t.exp_wins,1)},
-        {v:signed(t.luck_wins,1), cls:t.luck_wins>=0?"pos":"neg"}]};
-    })));
-  host.append(p4);
-
-  // 5. manager skill, only when the extra endpoints came back
+  // season lineup management, plus who checked out / draft slot, only when the extra endpoints came back
+  let p5=null, p6=null, p7=null;
   if(s.has_extras){
-    const p5=el("div","panel");
+    p5=el("div","panel");
     p5.append(el("h2",null,"Lineup management"));
     p5.append(el("p","note","Optimal is the best legal lineup available from the roster that week, bench included. Efficiency is what was actually started as a share of that. Points left behind is the season total."));
     p5.append(simpleTable(
@@ -998,9 +927,8 @@ function advancedView(){
                {v:fmt(t.left_on_bench,1)},{v:fmt(t.bench_per_week,1)},
                {v:ordinal(t.lineup_eff_rank)}]
       }))));
-    host.append(p5);
 
-    const p6=el("div","panel");
+    p6=el("div","panel");
     p6.append(el("h2",null,"Who checked out"));
     p6.append(el("p","note","ESPN doesn't keep a historical injury designation, so a player who was ruled out is spotted a different way: he was projected for nothing and scored nothing. Someone projected normally who scored nothing just busted, and that's a different failing. Waiver moves are the other half of the picture."));
     p6.append(simpleTable(
@@ -1015,10 +943,9 @@ function advancedView(){
                {v:t.drops},{v:t.trades||""},
                {v:fmt(t.lineup_eff,1)+"%"}]
       }))));
-    host.append(p6);
 
     if(teamsOf().some(t=>t.draft_slot)){
-      const p7=el("div","panel");
+      p7=el("div","panel");
       p7.append(el("h2",null,"Draft slot against results"));
       p7.append(el("p","note","Where each pick landed, and whether it mattered. The table is this season; the chart pools every drafted season in the league's history."));
       const split=el("div","split");
@@ -1051,14 +978,83 @@ function advancedView(){
       split.append(right);
 
       p7.append(split);
-      host.append(p7);
     }
   } else {
-    const p5=el("div","panel");
+    p5=el("div","panel");
     p5.append(el("h2",null,"Manager metrics unavailable"));
     p5.append(el("p","note",`No lineup or draft data came back for ${season}. Re-run with --refresh, or check espn_probe2.py against this season.`));
-    host.append(p5);
   }
+
+  // career scoring rank
+  const careers=Object.entries(DATA.history)
+    .filter(([,h])=>h.agg.seasons>0)
+    .sort((a,b)=>a[1].agg.avg_ppg_rank-b[1].agg.avg_ppg_rank);
+  let p3=null;
+  if(careers.length && DATA.seasons.length>1){
+    p3=el("div","panel");
+    p3.append(el("h2",null,"Career scoring rank"));
+    p3.append(el("p","note","Average finish in points per game across every season, with the percentile version alongside so league-size changes don't distort it. Swing is how much that rank bounces year to year."));
+    p3.append(simpleTable(
+      ["Manager","Seasons","Avg scoring rank","Percentile","Swing","Best","Worst","Avg spread","Playoffs","Titles","Avg luck"],
+      careers.map(([k,h])=>({
+        key:k,
+        cells:[nameCell({key:k,name:h.meta.name}),
+               {v:h.agg.seasons},{v:fmt(h.agg.avg_ppg_rank,2)},{v:fmt(h.agg.avg_ppg_pct,0)},
+               {v:"±"+fmt(h.agg.rank_sd,1)},{v:ordinal(h.agg.best_rank)},{v:ordinal(h.agg.worst_rank)},
+               {v:"±"+fmt(h.agg.avg_sd,1)},{v:h.agg.playoff_apps},{v:h.agg.titles||""},
+               {v:signed(h.agg.avg_luck,1),cls:h.agg.avg_luck>=0?"pos":"neg"}]
+      }))));
+  }
+
+  // weekly breaks
+  const p4=el("div","panel");
+  p4.append(el("h2",null,"Breaks and coin flips"));
+  p4.append(el("p","note",`Gifted wins came with a score that would normally have lost. Robbed losses came with a score that would normally have won. Close games were decided by under ${fmt(s.thresholds.close,0)} points.`));
+  p4.append(simpleTable(
+    ["Manager","Record","Gifted wins","Robbed losses","Net breaks","Close games","Exp wins","Wins above"],
+    teamsOf().slice().sort((a,b)=>(b.gifted-b.robbed)-(a.gifted-a.robbed)).map(t=>{
+      const net=t.gifted-t.robbed;
+      return {key:t.key, cells:[nameCell(t),
+        {v:`${t.wins}-${t.losses}${t.ties?"-"+t.ties:""}`},
+        {v:t.gifted||""},{v:t.robbed||""},
+        {v:net?signed(net,0):"0", cls:net>0?"pos":net<0?"neg":null},
+        {v:`${t.close_w}-${t.close_l}`},
+        {v:fmt(t.exp_wins,1)},
+        {v:signed(t.luck_wins,1), cls:t.luck_wins>=0?"pos":"neg"}]};
+    })));
+
+  // consistency
+  const p2=el("div","panel");
+  p2.append(el("h2",null,"Consistency"));
+  p2.append(el("p","note","How much a manager's weekly score moves around. The spread is in points; the relative column divides it by their average, so a low scorer isn't flattered for having less room to swing."));
+  p2.append(simpleTable(
+    ["Manager","PPG","Week-to-week spread","Relative","Steadiest","High","Low","Range"],
+    teamsOf().slice().sort((a,b)=>a.sd-b.sd).map(t=>({
+      key:t.key,
+      cells:[nameCell(t),{v:fmt(t.ppg,1)},{v:"±"+fmt(t.sd,1)},{v:fmt(t.cv,1)+"%"},
+             {v:ordinal(t.sd_rank)},{v:fmt(t.high,1)},{v:fmt(t.low,1)},
+             {v:fmt(t.high-t.low,1)}]
+    }))));
+
+  // who the schedule actually decided
+  const p1=el("div","panel");
+  p1.append(el("h2",null,`Who the schedule decided, ${season}`));
+  p1.append(el("p","note",`The top ${s.playoff_teams} on all-play are the teams that scored their way in. Anyone marked gifted or robbed had their season settled by the draw rather than the scoring.`));
+  p1.append(simpleTable(
+    ["Manager","Made playoffs","Deserved on all-play","All-play","Reg finish","Final","Verdict"],
+    teamsOf().slice().sort((a,b)=>b.allplay_pct-a.allplay_pct).map(t=>({
+      key:t.key,
+      cells:[nameCell(t),
+             {v:t.made_playoffs?"yes":"no", cls:t.made_playoffs?"w":null},
+             {v:t.allplay_playoffs?"yes":"no", cls:t.allplay_playoffs?"w":null},
+             {v:(t.allplay_pct*100).toFixed(0)+"%"},
+             {v:ordinal(t.finish)},
+             {v:t.final_rank?ordinal(t.final_rank):"—"},
+             {v:t.playoff_swing==="gifted"?"handed a spot":t.playoff_swing==="robbed"?"squeezed out":"",
+              cls:t.playoff_swing==="gifted"?"pos":t.playoff_swing==="robbed"?"neg":null}]
+    }))));
+
+  [p3b, p5, p3, p4, p2, p1, p6, p7].forEach(p=>{ if(p) host.append(p); });
 }
 
 function draftCorrelation(){
