@@ -229,7 +229,7 @@ const EMBEDDED = /*__EMBEDDED_DATA__*/null;
 const PALETTE = ["#e05c5c","#4fbf87","#5fa8e8","#e8a33d","#b78be0","#3fc4c0",
                  "#e0729c","#8dbf4f","#7f8ff0","#d9884f","#5ec7e8","#c2b04a"];
 
-let DATA=null, season=null, view="league", sel=null, sortKey="finish", sortDir=1;
+let DATA=null, season=null, view="advanced", sel=null, sortKey="finish", sortDir=1;
 
 /* Phones get a different chart viewBox, not a scaled-down copy of the desktop one.
    A 1000-wide box squeezed into 360 CSS pixels renders 11px axis text at about 4px. */
@@ -1204,6 +1204,9 @@ function boot(data){
   DATA.maxTeams=Math.max(...DATA.seasons.map(s=>DATA.data[s].teams.length));
 
   season=DATA.seasons[DATA.seasons.length-1];
+  // default to the top team in the rail's own order (best regular-season finish)
+  const topTeam=teamsOf().slice().sort((a,b)=>a.finish-b.finish)[0];
+  sel = topTeam ? topTeam.key : null;
   const sel2=$("seasonSel"); sel2.innerHTML="";
   DATA.seasons.slice().reverse().forEach(s=>{
     const o=document.createElement("option"); o.value=s; o.textContent=s; sel2.append(o);
