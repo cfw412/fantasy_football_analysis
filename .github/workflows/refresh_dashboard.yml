@@ -2,11 +2,12 @@ name: Refresh dashboard
 
 on:
   schedule:
-    # GitHub cron is UTC-fixed and can't express "5am Central" directly, so
-    # this fires at 5am for BOTH Central offsets and the guard step below
-    # skips the one that isn't actually 5am locally right now.
-    - cron: "0 10 * * 2"   # 5:00 AM CDT (Mar-Nov, UTC-5)
-    - cron: "0 11 * * 2"   # 5:00 AM CST (Nov-Mar, UTC-6)
+    # 07:00 UTC ≈ 2:00 AM Central (CDT) / 1:00 AM Central (CST, winter).
+    # GitHub cron is UTC-fixed, so the local hour drifts an hour across the
+    # DST changeover — not worth guarding against precisely, since GitHub
+    # can delay scheduled runs by hours during high load regardless (seen
+    # firsthand: a 10:00 UTC trigger actually started at 14:15 UTC once).
+    - cron: "0 7 * * 2"
   workflow_dispatch: {}   # lets you trigger it manually from the Actions tab to test
 
 permissions:
@@ -19,25 +20,12 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v7
 
-      - name: Only proceed if it's actually 5am Central right now
-        id: check-time
-        run: |
-          hour=$(TZ="America/Chicago" date +%H)
-          if [ "$hour" = "05" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping — local Chicago time is ${hour}:00, not 05:00 (this is the redundant DST cron firing)."
-          fi
-
       - name: Set up Python
-        if: steps.check-time.outputs.should_run == 'true'
         uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
       - name: Install dependencies
-        if: steps.check-time.outputs.should_run == 'true'
         run: pip install requests
 
       # Past seasons never change, so cache their raw ESPN pulls across runs
@@ -46,7 +34,6 @@ jobs:
       # missing from history_cache/, and CI starts with an empty checkout
       # every time (history_cache/ is gitignored, so it's never committed).
       - name: Restore season cache
-        if: steps.check-time.outputs.should_run == 'true'
         uses: actions/cache@v6
         with:
           path: history_cache
@@ -55,7 +42,6 @@ jobs:
             history-cache-
 
       - name: Pull latest league data and rebuild static dashboard
-        if: steps.check-time.outputs.should_run == 'true'
         env:
           ESPN_LEAGUE_ID: ${{ secrets.ESPN_LEAGUE_ID }}
           ESPN_SWID: ${{ secrets.ESPN_SWID }}
@@ -66,7 +52,6 @@ jobs:
         run: python3 league_dashboard.py --season 2026 --build-static --out docs/index.html --no-serve
 
       - name: Commit and push if anything changed
-        if: steps.check-time.outputs.should_run == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
