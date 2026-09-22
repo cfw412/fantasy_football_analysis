@@ -1,0 +1,65 @@
+name: Refresh dashboard
+
+on:
+  schedule:
+    # GitHub cron is UTC-fixed and can't express "5am Central" directly, so
+    # this fires at 5am for BOTH Central offsets and the guard step below
+    # skips the one that isn't actually 5am locally right now.
+    - cron: "0 10 * * 2"   # 5:00 AM CDT (Mar-Nov, UTC-5)
+    - cron: "0 11 * * 2"   # 5:00 AM CST (Nov-Mar, UTC-6)
+  workflow_dispatch: {}   # lets you trigger it manually from the Actions tab to test
+
+permissions:
+  contents: write   # needed so the workflow can push the refreshed file back
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Only proceed if it's actually 5am Central right now
+        id: check-time
+        run: |
+          hour=$(TZ="America/Chicago" date +%H)
+          if [ "$hour" = "05" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping — local Chicago time is ${hour}:00, not 05:00 (this is the redundant DST cron firing)."
+          fi
+
+      - name: Set up Python
+        if: steps.check-time.outputs.should_run == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        if: steps.check-time.outputs.should_run == 'true'
+        run: pip install requests
+
+      - name: Pull latest league data and rebuild static dashboard
+        if: steps.check-time.outputs.should_run == 'true'
+        env:
+          ESPN_LEAGUE_ID: ${{ secrets.ESPN_LEAGUE_ID }}
+          ESPN_SWID: ${{ secrets.ESPN_SWID }}
+          ESPN_S2: ${{ secrets.ESPN_S2 }}
+        run: python3 league_dashboard.py --refresh --build-static --out docs/index.html --no-serve
+
+      - name: Commit and push if anything changed
+        if: steps.check-time.outputs.should_run == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Only docs/index.html — it's the sanitized, credential-free file.
+          # league_history.json is gitignored on purpose: it carries member
+          # SWIDs and real owner names, so it must never be committed.
+          git add docs/index.html
+          if git diff --cached --quiet; then
+            echo "No data changes this week — nothing to commit."
+          else
+            git commit -m "Automated data refresh $(date -u +'%Y-%m-%d')"
+            git push
+          fi
