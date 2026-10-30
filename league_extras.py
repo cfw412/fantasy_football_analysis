@@ -30,6 +30,8 @@ SLOT_NAME = {0: "QB", 2: "RB", 3: "RB/WR", 4: "WR", 5: "WR/TE", 6: "TE",
              7: "SUPERFLEX", 16: "DST", 17: "K", 20: "BENCH", 21: "IR",
              23: "FLEX"}
 
+POSITION_NAME = {1: "QB", 2: "RB", 3: "WR", 4: "TE", 5: "K", 16: "DST"}
+
 
 # ---------- exact best-lineup solver ----------
 
@@ -400,3 +402,91 @@ def season_extras(season, weeks, refresh=False, verbose=True):
                            "faab": 0, "moves_to_ir": 0}),
         }
     return out
+
+# ---------- publishable roster export ----------
+
+def roster_export(season, weeks, refresh=False):
+    """Player-level rosters and weekly scoring, shaped for publishing.
+
+    season_extras() already pulls every week's box scores to solve the optimal
+    lineup, then keeps only the per-team totals. This keeps the players
+    instead, so a tool that needs rosters can read them out of the published
+    file on the weekly refresh schedule instead of pulling the same weeks
+    again with its own cookies.
+
+    Franchises are identified by team_id and abbrev only — no SWIDs, no owner
+    names, no ESPN team names. That is the same bar
+    league_dashboard.sanitize_payload() holds the public dashboard to.
+    """
+    players, latest, covered = {}, {}, []
+
+    for week in (weeks or []):
+        raw = week_rosters(season, week, refresh=refresh)
+        if not raw:
+            continue
+        found = False
+        for g in raw.get("schedule", []):
+            if g.get("matchupPeriodId") != week:
+                continue
+            for side in ("home", "away"):
+                s = g.get(side) or {}
+                tid = s.get("teamId")
+                entries = ((s.get("rosterForCurrentScoringPeriod") or {})
+                           .get("entries") or [])
+                if tid is None or not entries:
+                    continue
+                found = True
+                for e in entries:
+                    p = ((e.get("playerPoolEntry") or {}).get("player") or {})
+                    pid = p.get("id")
+                    if pid is None:
+                        continue
+                    rec = players.setdefault(pid, {
+                        "id": pid,
+                        "name": p.get("fullName") or "",
+                        # both forms on purpose: the name reads, the id is what
+                        # a consumer should match on
+                        "pos": POSITION_NAME.get(p.get("defaultPositionId"), "?"),
+                        "pos_id": p.get("defaultPositionId") or 0,
+                        "pro_team": p.get("proTeamId") or 0,
+                        "eligible": sorted(p.get("eligibleSlots") or []),
+                        "weekly": {},
+                    })
+                    act = _stat(p.get("stats"), 0, week)
+                    if act is not None:
+                        rec["weekly"][str(week)] = round(float(act), 2)
+                    prj = _stat(p.get("stats"), 1, week)
+                    latest[pid] = (week, tid, e.get("lineupSlotId"),
+                                   None if prj is None else round(float(prj), 2))
+        if found:
+            covered.append(week)
+
+    # Only the last covered week says who is rostered NOW. A player seen in an
+    # earlier week and not since was dropped, so he keeps his scoring history
+    # but no team: attributing him to his old squad would inflate that roster
+    # with everyone who ever passed through it.
+    final = max(covered) if covered else None
+    for pid, (week, tid, slot, prj) in latest.items():
+        rec = players.get(pid)
+        if not rec:
+            continue
+        current = week == final
+        rec["team_id"] = tid if current else None
+        rec["slot"] = SLOT_NAME.get(slot, str(slot)) if current else None
+        rec["slot_id"] = slot if current else None
+        rec["projected"] = prj if current else None
+        if not current:
+            rec["last_rostered_week"] = week
+
+    raw_league = ld.fetch_season(season) or {}
+    teams = {str(t["id"]): {"abbrev": t.get("abbrev") or f"T{t['id']}"}
+             for t in raw_league.get("teams") or []}
+
+    return {
+        "season": season,
+        "through_week": max(covered) if covered else None,
+        "weeks_covered": covered,
+        "teams": teams,
+        "players": sorted(players.values(),
+                          key=lambda r: (r.get("team_id") or 0, r["name"])),
+    }

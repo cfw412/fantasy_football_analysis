@@ -763,6 +763,49 @@ def build_static(payload, out=None):
     return path
 
 
+def build_rosters(payload, season, out):
+    """Publish one season's player-level rosters alongside the dashboard.
+
+    The weekly refresh already pulls these box scores to compute lineup
+    efficiency and then drops the player data. Writing it out lets the season
+    manager tool read rosters from the published file on this same schedule
+    instead of keeping its own cookies to pull the identical weeks.
+
+    Carries team ids and abbrevs only, so it clears the same bar as
+    sanitize_payload(): no SWIDs, no owner names, no ESPN team names.
+    """
+    season_data = (payload.get("data") or {}).get(str(season))
+    if not season_data:
+        print(f"No {season} data in this build; no roster file written.")
+        return None
+
+    import league_extras as lx
+    lx.configure(SESSION, LEAGUE_ID)
+    export = lx.roster_export(season, season_data["weeks"])
+    if not export["players"]:
+        print(f"No {season} rosters came back; no roster file written.")
+        return None
+
+    blob = json.dumps(export, indent=1)
+    leaks = scan_for_credentials(blob)
+    if leaks:
+        print("REFUSING to write the roster export: it contains "
+              + ", ".join(leaks) + ".")
+        print("Nothing was written. This file was about to be published publicly.")
+        return None
+
+    path = here(out)
+    parent = os.path.dirname(path)
+    if parent:
+        os.makedirs(parent, exist_ok=True)
+    with open(path, "w") as f:
+        f.write(blob)
+    kb = os.path.getsize(path) / 1024
+    print(f"Wrote roster export: {path}  ({kb:.0f} KB, {len(export['players'])} "
+          f"players through week {export['through_week']})")
+    return path
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--refresh", action="store_true", help="re-download every season")
@@ -775,6 +818,9 @@ def main():
                     help="rebuild the static file from league_history.json; "
                          "no cookies, no network")
     ap.add_argument("--out", help="where --build-static writes (e.g. docs/index.html)")
+    ap.add_argument("--export-rosters", metavar="PATH",
+                    help="also write player-level rosters for the current season "
+                         "(e.g. docs/rosters_2026.json) for the manager tool")
     ap.add_argument("--port", type=int, default=WEB_PORT)
     args = ap.parse_args()
 
@@ -813,6 +859,9 @@ def main():
 
     if args.build_static:
         build_static(payload, args.out)
+
+    if args.export_rosters:
+        build_rosters(payload, args.season or CURRENT_SEASON, args.export_rosters)
 
     if args.no_serve:
         return

@@ -1,7 +1,13 @@
 # Publishing the league dashboard
 
-The published artifact is a single file, `docs/index.html`, with the computed data
-baked in. It makes no network calls, needs no server, and carries no credentials.
+Two files are published, both credential-free:
+
+- `docs/index.html` — the dashboard itself, with the computed data baked in. It makes
+  no network calls and needs no server.
+- `docs/rosters_<season>.json` — player-level rosters and weekly scoring, written by
+  `--export-rosters`. The season manager tool reads this instead of keeping its own
+  ESPN cookies to pull the same weeks again. Those box scores are already pulled here
+  for the lineup metrics, so publishing them costs nothing.
 
 ## One-time setup
 
@@ -37,7 +43,8 @@ Check `git status` names no `.env`, no `history_cache/`, no `league_history.json
 Refresh the data (needs cookies, hits ESPN), then build:
 
 ```bash
-python3 league_dashboard.py --refresh --build-static --out docs/index.html
+python3 league_dashboard.py --refresh --build-static --out docs/index.html \
+        --export-rosters docs/rosters_2026.json
 ```
 
 Or rebuild the page from data you already have — no cookies, no network:
@@ -49,10 +56,13 @@ python3 league_dashboard.py --static-only --out docs/index.html
 Then:
 
 ```bash
-git add docs/index.html
+git add docs/index.html docs/rosters_2026.json
 git commit -m "Update through week N"
 git push
 ```
+
+The weekly GitHub Action does all of this on its own every Tuesday morning; the manual
+loop is for when you want it sooner.
 
 ## Turning on GitHub Pages
 
@@ -85,6 +95,12 @@ Removed from the published file:
 
 Keys become opaque ids (`m01`, `m02`, …), assigned in sorted order so they stay stable
 across rebuilds and colours don't shuffle between publishes.
+
+The roster export clears the same bar by construction rather than by stripping: it is
+built from team ids and abbrevs only, and never reads the member records that carry
+SWIDs and owner names. NFL player names are in it, which is fine — they are not league
+members. It goes through `scan_for_credentials()` before being written, same as the
+HTML.
 
 Then `scan_for_credentials()` checks the finished HTML for the live cookie values, the
 string `espn_s2`, and anything SWID-shaped. **If it finds anything, nothing is written.**

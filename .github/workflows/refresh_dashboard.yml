@@ -49,16 +49,22 @@ jobs:
         # --season only forces a re-download of the current year; older
         # seasons are read from the restored cache above. Bump 2026 (and
         # CURRENT_SEASON in league_dashboard.py) at the start of each season.
-        run: python3 league_dashboard.py --season 2026 --build-static --out docs/index.html --no-serve
+        #
+        # --export-rosters writes the player-level file the season manager
+        # tool reads. These box scores are pulled anyway for the lineup
+        # metrics, so publishing them costs nothing and saves that tool from
+        # keeping cookies to pull the same weeks again.
+        run: python3 league_dashboard.py --season 2026 --build-static --out docs/index.html --export-rosters docs/rosters_2026.json --no-serve
 
       - name: Commit and push if anything changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Only docs/index.html — it's the sanitized, credential-free file.
-          # league_history.json is gitignored on purpose: it carries member
-          # SWIDs and real owner names, so it must never be committed.
-          git add docs/index.html
+          # Only what is sanitized and credential-free: docs/index.html, and
+          # docs/rosters_2026.json, which carries team ids and abbrevs but no
+          # SWIDs, owner names or ESPN team names. league_history.json is
+          # gitignored on purpose: it has all three, so it is never committed.
+          git add docs/index.html docs/rosters_2026.json
           if git diff --cached --quiet; then
             echo "No data changes this week — nothing to commit."
           else
