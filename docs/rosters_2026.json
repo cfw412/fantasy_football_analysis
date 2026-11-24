@@ -1,6 +1,6 @@
 {
  "season": 2026,
- "through_week": 10,
+ "through_week": 11,
  "weeks_covered": [
   1,
   2,
@@ -11,7 +11,8 @@
   7,
   8,
   9,
-  10
+  10,
+  11
  ],
  "teams": {
   "1": {
@@ -53,6 +54,33 @@
  },
  "players": [
   {
+   "id": -16025,
+   "name": "49ers D/ST",
+   "pos": "DST",
+   "pos_id": 16,
+   "pro_team": 25,
+   "eligible": [
+    16,
+    20,
+    21
+   ],
+   "weekly": {
+    "2": 9.0,
+    "3": 0.0,
+    "4": 5.0,
+    "5": 20.0,
+    "6": 5.0,
+    "7": 1.0,
+    "9": 19.0,
+    "10": -1.0
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
+  },
+  {
    "id": 3054850,
    "name": "Alvin Kamara",
    "pos": "RB",
@@ -75,48 +103,6 @@
    "slot_id": null,
    "projected": null,
    "last_rostered_week": 5
-  },
-  {
-   "id": -16003,
-   "name": "Bears D/ST",
-   "pos": "DST",
-   "pos_id": 16,
-   "pro_team": 3,
-   "eligible": [
-    16,
-    20,
-    21
-   ],
-   "weekly": {
-    "8": 10.0,
-    "9": 13.0
-   },
-   "team_id": null,
-   "slot": null,
-   "slot_id": null,
-   "projected": null,
-   "last_rostered_week": 9
-  },
-  {
-   "id": -16004,
-   "name": "Bengals D/ST",
-   "pos": "DST",
-   "pos_id": 16,
-   "pro_team": 4,
-   "eligible": [
-    16,
-    20,
-    21
-   ],
-   "weekly": {
-    "3": 0.0,
-    "8": 2.0
-   },
-   "team_id": null,
-   "slot": null,
-   "slot_id": null,
-   "projected": null,
-   "last_rostered_week": 8
   },
   {
    "id": 4241474,
@@ -170,62 +156,6 @@
    "slot_id": null,
    "projected": null,
    "last_rostered_week": 6
-  },
-  {
-   "id": -16007,
-   "name": "Broncos D/ST",
-   "pos": "DST",
-   "pos_id": 16,
-   "pro_team": 7,
-   "eligible": [
-    16,
-    20,
-    21
-   ],
-   "weekly": {
-    "1": 2.0,
-    "2": 9.0,
-    "3": 9.0,
-    "4": 1.0,
-    "5": 14.0,
-    "6": 11.0,
-    "7": 3.0,
-    "8": 1.0,
-    "9": 6.0
-   },
-   "team_id": null,
-   "slot": null,
-   "slot_id": null,
-   "projected": null,
-   "last_rostered_week": 9
-  },
-  {
-   "id": 4688380,
-   "name": "Cam Ward",
-   "pos": "QB",
-   "pos_id": 1,
-   "pro_team": 10,
-   "eligible": [
-    0,
-    7,
-    20,
-    21
-   ],
-   "weekly": {
-    "1": 11.7,
-    "2": 20.02,
-    "3": 9.44,
-    "4": 15.58,
-    "5": 5.0,
-    "6": 6.78,
-    "7": 5.74,
-    "8": 26.26
-   },
-   "team_id": null,
-   "slot": null,
-   "slot_id": null,
-   "projected": null,
-   "last_rostered_week": 9
   },
   {
    "id": 2573079,
@@ -289,30 +219,6 @@
    "slot_id": null,
    "projected": null,
    "last_rostered_week": 1
-  },
-  {
-   "id": 4360635,
-   "name": "Chig Okonkwo",
-   "pos": "TE",
-   "pos_id": 4,
-   "pro_team": 28,
-   "eligible": [
-    5,
-    6,
-    7,
-    20,
-    21,
-    23
-   ],
-   "weekly": {
-    "8": 2.2,
-    "9": 8.7
-   },
-   "team_id": null,
-   "slot": null,
-   "slot_id": null,
-   "projected": null,
-   "last_rostered_week": 9
   },
   {
    "id": 3116165,
@@ -431,6 +337,33 @@
    "last_rostered_week": 7
   },
   {
+   "id": 3917792,
+   "name": "Daniel Jones",
+   "pos": "QB",
+   "pos_id": 1,
+   "pro_team": 0,
+   "eligible": [
+    0,
+    7,
+    20,
+    21
+   ],
+   "weekly": {
+    "1": 9.04,
+    "2": 11.4,
+    "4": 7.92,
+    "5": 11.08,
+    "6": 13.76,
+    "7": 3.62,
+    "10": 5.22
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
+  },
+  {
    "id": 4429160,
    "name": "De'Von Achane",
    "pos": "RB",
@@ -481,6 +414,36 @@
    "last_rostered_week": 1
   },
   {
+   "id": 4569559,
+   "name": "Devaughn Vele",
+   "pos": "WR",
+   "pos_id": 3,
+   "pro_team": 18,
+   "eligible": [
+    3,
+    4,
+    5,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "3": 5.4,
+    "4": 14.4,
+    "5": 4.6,
+    "6": 5.7,
+    "7": 13.9,
+    "9": 2.7,
+    "10": 2.4
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
+  },
+  {
    "id": 4428850,
    "name": "Dontayvion Wicks",
    "pos": "WR",
@@ -528,6 +491,35 @@
    "slot_id": null,
    "projected": null,
    "last_rostered_week": 3
+  },
+  {
+   "id": 4887558,
+   "name": "Emanuel Wilson",
+   "pos": "RB",
+   "pos_id": 2,
+   "pro_team": 26,
+   "eligible": [
+    2,
+    3,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "4": 25.5,
+    "5": 12.2,
+    "6": 5.2,
+    "7": 18.0,
+    "8": 0.0,
+    "9": 0.0,
+    "10": 0.0
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
   },
   {
    "id": -16001,
@@ -592,6 +584,35 @@
    "slot_id": null,
    "projected": null,
    "last_rostered_week": 9
+  },
+  {
+   "id": 3046439,
+   "name": "Hunter Henry",
+   "pos": "TE",
+   "pos_id": 4,
+   "pro_team": 17,
+   "eligible": [
+    5,
+    6,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "1": 4.1,
+    "2": 5.5,
+    "3": 1.0,
+    "7": 10.6,
+    "8": 4.5,
+    "9": 5.0,
+    "10": 3.2
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
   },
   {
    "id": 4575131,
@@ -843,6 +864,34 @@
    "last_rostered_week": 1
   },
   {
+   "id": 4360569,
+   "name": "Jordan Mason",
+   "pos": "RB",
+   "pos_id": 2,
+   "pro_team": 16,
+   "eligible": [
+    2,
+    3,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "1": 11.9,
+    "2": 0.0,
+    "7": 6.8,
+    "8": 2.0,
+    "9": 5.2,
+    "10": 5.9
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
+  },
+  {
    "id": 4688813,
    "name": "Josh Downs",
    "pos": "WR",
@@ -871,6 +920,35 @@
    "last_rostered_week": 7
   },
   {
+   "id": 4696044,
+   "name": "Kaelon Black",
+   "pos": "RB",
+   "pos_id": 2,
+   "pro_team": 25,
+   "eligible": [
+    2,
+    3,
+    7,
+    20,
+    21,
+    23,
+    25
+   ],
+   "weekly": {
+    "2": 2.5,
+    "3": 1.7,
+    "4": 1.3,
+    "5": 1.6,
+    "9": 7.0,
+    "10": 13.6
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
+  },
+  {
    "id": 2973405,
    "name": "Kalif Raymond",
    "pos": "WR",
@@ -895,6 +973,31 @@
    "last_rostered_week": 4
   },
   {
+   "id": 15818,
+   "name": "Keenan Allen",
+   "pos": "WR",
+   "pos_id": 3,
+   "pro_team": 25,
+   "eligible": [
+    3,
+    4,
+    5,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "9": 4.6,
+    "10": 8.6
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
+  },
+  {
    "id": 4599739,
    "name": "Kendre Miller",
    "pos": "RB",
@@ -917,30 +1020,6 @@
    "slot_id": null,
    "projected": null,
    "last_rostered_week": 8
-  },
-  {
-   "id": 4371733,
-   "name": "Kenny Gainwell",
-   "pos": "RB",
-   "pos_id": 2,
-   "pro_team": 27,
-   "eligible": [
-    2,
-    3,
-    7,
-    20,
-    21,
-    23
-   ],
-   "weekly": {
-    "1": 2.3,
-    "2": 3.0
-   },
-   "team_id": null,
-   "slot": null,
-   "slot_id": null,
-   "projected": null,
-   "last_rostered_week": 2
   },
   {
    "id": 5083315,
@@ -1024,25 +1103,34 @@
    "last_rostered_week": 9
   },
   {
-   "id": -16008,
-   "name": "Lions D/ST",
-   "pos": "DST",
-   "pos_id": 16,
-   "pro_team": 8,
+   "id": 3916387,
+   "name": "Lamar Jackson",
+   "pos": "QB",
+   "pos_id": 1,
+   "pro_team": 33,
    "eligible": [
-    16,
+    0,
+    7,
     20,
     21
    ],
    "weekly": {
-    "1": 5.0,
-    "2": -4.0
+    "1": 24.96,
+    "2": 14.8,
+    "3": 20.44,
+    "4": 18.88,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": 0.0,
+    "9": 0.0,
+    "10": 0.0
    },
    "team_id": null,
    "slot": null,
    "slot_id": null,
    "projected": null,
-   "last_rostered_week": 2
+   "last_rostered_week": 10
   },
   {
    "id": 4870795,
@@ -1169,6 +1257,38 @@
    "slot_id": null,
    "projected": null,
    "last_rostered_week": 5
+  },
+  {
+   "id": 3116365,
+   "name": "Mark Andrews",
+   "pos": "TE",
+   "pos_id": 4,
+   "pro_team": 33,
+   "eligible": [
+    5,
+    6,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "1": 6.9,
+    "2": 7.9,
+    "3": 3.9,
+    "4": 11.2,
+    "5": 2.8,
+    "6": 0.9,
+    "7": 3.8,
+    "8": 2.9,
+    "9": 2.9,
+    "10": 12.2
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
   },
   {
    "id": 4432708,
@@ -1305,6 +1425,34 @@
    "last_rostered_week": 9
   },
   {
+   "id": 4723820,
+   "name": "Omar Cooper Jr.",
+   "pos": "WR",
+   "pos_id": 3,
+   "pro_team": 20,
+   "eligible": [
+    3,
+    4,
+    5,
+    7,
+    20,
+    21,
+    23,
+    25
+   ],
+   "weekly": {
+    "7": 20.0,
+    "8": 0.0,
+    "9": 9.8,
+    "10": 0.0
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
+  },
+  {
    "id": 4595342,
    "name": "Oronde Gadsden",
    "pos": "TE",
@@ -1326,29 +1474,6 @@
    "slot_id": null,
    "projected": null,
    "last_rostered_week": 3
-  },
-  {
-   "id": -16029,
-   "name": "Panthers D/ST",
-   "pos": "DST",
-   "pos_id": 16,
-   "pro_team": 29,
-   "eligible": [
-    16,
-    20,
-    21
-   ],
-   "weekly": {
-    "3": 6.0,
-    "6": 6.0,
-    "7": -3.0,
-    "8": 5.0
-   },
-   "team_id": null,
-   "slot": null,
-   "slot_id": null,
-   "projected": null,
-   "last_rostered_week": 8
   },
   {
    "id": 4429025,
@@ -1430,6 +1555,32 @@
    "slot_id": null,
    "projected": null,
    "last_rostered_week": 6
+  },
+  {
+   "id": -16033,
+   "name": "Ravens D/ST",
+   "pos": "DST",
+   "pos_id": 16,
+   "pro_team": 33,
+   "eligible": [
+    16,
+    20,
+    21
+   ],
+   "weekly": {
+    "1": 8.0,
+    "2": 5.0,
+    "3": 1.0,
+    "4": 7.0,
+    "6": 10.0,
+    "7": -3.0,
+    "10": 4.0
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
   },
   {
    "id": 4361432,
@@ -1604,6 +1755,32 @@
    "last_rostered_week": 7
   },
   {
+   "id": 4567156,
+   "name": "Treylon Burks",
+   "pos": "WR",
+   "pos_id": 3,
+   "pro_team": 28,
+   "eligible": [
+    3,
+    4,
+    5,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "8": 9.6,
+    "9": 0.0,
+    "10": 3.7
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
+  },
+  {
    "id": 4373626,
    "name": "Tyler Allgeier",
    "pos": "RB",
@@ -1674,6 +1851,31 @@
    "last_rostered_week": 5
   },
   {
+   "id": 4569587,
+   "name": "Wan'Dale Robinson",
+   "pos": "WR",
+   "pos_id": 3,
+   "pro_team": 10,
+   "eligible": [
+    3,
+    4,
+    5,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "1": 6.3,
+    "10": 2.5
+   },
+   "team_id": null,
+   "slot": null,
+   "slot_id": null,
+   "projected": null,
+   "last_rostered_week": 10
+  },
+  {
    "id": 4683062,
    "name": "Xavier Worthy",
    "pos": "WR",
@@ -1719,12 +1921,13 @@
    ],
    "weekly": {
     "9": 0.0,
-    "10": 7.4
+    "10": 7.4,
+    "11": 4.0
    },
    "team_id": 1,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 8.89
+   "projected": 8.99
   },
   {
    "id": 4696981,
@@ -1749,12 +1952,13 @@
     "6": 0.0,
     "7": 18.6,
     "9": 0.0,
-    "10": 25.7
+    "10": 25.7,
+    "11": 4.3
    },
    "team_id": 1,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 10.93
+   "slot": "SUPERFLEX",
+   "slot_id": 7,
+   "projected": 13.13
   },
   {
    "id": 4362238,
@@ -1779,12 +1983,13 @@
     "7": 7.8,
     "8": 12.1,
     "9": 9.0,
-    "10": 24.3
+    "10": 24.3,
+    "11": 6.1
    },
    "team_id": 1,
    "slot": "FLEX",
    "slot_id": 23,
-   "projected": 11.11
+   "projected": 13.16
   },
   {
    "id": 4431452,
@@ -1811,9 +2016,9 @@
     "10": 3.02
    },
    "team_id": 1,
-   "slot": "SUPERFLEX",
-   "slot_id": 7,
-   "projected": 21.97
+   "slot": "IR",
+   "slot_id": 21,
+   "projected": 0.0
   },
   {
    "id": 4832955,
@@ -1833,12 +2038,13 @@
    "weekly": {
     "3": 1.7,
     "4": 1.5,
-    "10": 32.1
+    "10": 32.1,
+    "11": 22.3
    },
    "team_id": 1,
    "slot": "RB",
    "slot_id": 2,
-   "projected": 16.73
+   "projected": 18.88
   },
   {
    "id": 3040151,
@@ -1863,12 +2069,13 @@
     "6": 15.4,
     "7": 10.8,
     "9": 7.8,
-    "10": 10.4
+    "10": 10.4,
+    "11": 16.9
    },
    "team_id": 1,
    "slot": "TE",
    "slot_id": 6,
-   "projected": 12.78
+   "projected": 10.67
   },
   {
    "id": 4695883,
@@ -1893,12 +2100,13 @@
     "7": 1.4,
     "8": 8.6,
     "9": 4.6,
-    "10": 0.3
+    "10": 0.3,
+    "11": 6.7
    },
    "team_id": 1,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 9.35
+   "projected": 7.43
   },
   {
    "id": 4608686,
@@ -1922,39 +2130,34 @@
     "6": 0.0,
     "7": 0.0,
     "8": 0.0,
-    "9": 0.0
-   },
-   "team_id": 1,
-   "slot": "IR",
-   "slot_id": 21,
-   "projected": 0.0
-  },
-  {
-   "id": 4723820,
-   "name": "Omar Cooper Jr.",
-   "pos": "WR",
-   "pos_id": 3,
-   "pro_team": 20,
-   "eligible": [
-    3,
-    4,
-    5,
-    7,
-    20,
-    21,
-    23,
-    25
-   ],
-   "weekly": {
-    "7": 20.0,
-    "8": 0.0,
-    "9": 9.8,
-    "10": 0.0
+    "9": 0.0,
+    "11": 1.8
    },
    "team_id": 1,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 7.6
+   "projected": 8.36
+  },
+  {
+   "id": -16008,
+   "name": "Lions D/ST",
+   "pos": "DST",
+   "pos_id": 16,
+   "pro_team": 8,
+   "eligible": [
+    16,
+    20,
+    21
+   ],
+   "weekly": {
+    "1": 5.0,
+    "2": -4.0,
+    "11": 6.0
+   },
+   "team_id": 1,
+   "slot": "DST",
+   "slot_id": 16,
+   "projected": 5.72
   },
   {
    "id": 4685382,
@@ -1979,12 +2182,13 @@
     "6": 5.9,
     "8": 3.7,
     "9": 6.0,
-    "10": 17.0
+    "10": 17.0,
+    "11": 9.8
    },
    "team_id": 1,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 7.26
+   "projected": 12.66
   },
   {
    "id": -16017,
@@ -2010,9 +2214,9 @@
     "10": -2.0
    },
    "team_id": 1,
-   "slot": "DST",
-   "slot_id": 16,
-   "projected": 3.52
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4569173,
@@ -2043,7 +2247,7 @@
    "team_id": 1,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 11.78
+   "projected": 0.0
   },
   {
    "id": 4360310,
@@ -2066,12 +2270,13 @@
     "6": 27.34,
     "8": 19.4,
     "9": 13.58,
-    "10": 26.78
+    "10": 26.78,
+    "11": 12.74
    },
    "team_id": 1,
    "slot": "QB",
    "slot_id": 0,
-   "projected": 21.47
+   "projected": 19.49
   },
   {
    "id": 4429615,
@@ -2098,19 +2303,41 @@
     "7": 23.7,
     "8": 0.0,
     "9": 3.8,
-    "10": 8.4
+    "10": 8.4,
+    "11": 12.4
    },
    "team_id": 1,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 11.87
+   "projected": 11.03
   },
   {
-   "id": 3917792,
-   "name": "Daniel Jones",
+   "id": -16003,
+   "name": "Bears D/ST",
+   "pos": "DST",
+   "pos_id": 16,
+   "pro_team": 3,
+   "eligible": [
+    16,
+    20,
+    21
+   ],
+   "weekly": {
+    "8": 10.0,
+    "9": 13.0,
+    "11": 15.0
+   },
+   "team_id": 2,
+   "slot": "DST",
+   "slot_id": 16,
+   "projected": 5.91
+  },
+  {
+   "id": 4688380,
+   "name": "Cam Ward",
    "pos": "QB",
    "pos_id": 1,
-   "pro_team": 11,
+   "pro_team": 10,
    "eligible": [
     0,
     7,
@@ -2118,18 +2345,20 @@
     21
    ],
    "weekly": {
-    "1": 9.04,
-    "2": 11.4,
-    "4": 7.92,
-    "5": 11.08,
-    "6": 13.76,
-    "7": 3.62,
-    "10": 5.22
+    "1": 11.7,
+    "2": 20.02,
+    "3": 9.44,
+    "4": 15.58,
+    "5": 5.0,
+    "6": 6.78,
+    "7": 5.74,
+    "8": 26.26,
+    "11": 22.22
    },
    "team_id": 2,
-   "slot": "SUPERFLEX",
-   "slot_id": 7,
-   "projected": 12.14
+   "slot": "QB",
+   "slot_id": 0,
+   "projected": 16.96
   },
   {
    "id": 4035538,
@@ -2154,12 +2383,13 @@
     "6": 0.0,
     "7": 0.0,
     "9": 0.0,
-    "10": 0.0
+    "10": 0.0,
+    "11": 13.9
    },
    "team_id": 2,
-   "slot": "IR",
-   "slot_id": 21,
-   "projected": 0.0
+   "slot": "SUPERFLEX",
+   "slot_id": 7,
+   "projected": 12.81
   },
   {
    "id": 4241478,
@@ -2185,12 +2415,13 @@
     "6": 17.0,
     "7": 0.0,
     "8": 0.0,
-    "9": 0.0
+    "9": 0.0,
+    "11": 6.6
    },
    "team_id": 2,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
+   "slot": "WR",
+   "slot_id": 4,
+   "projected": 10.67
   },
   {
    "id": 3043078,
@@ -2216,12 +2447,13 @@
     "7": 5.4,
     "8": 13.0,
     "9": 5.58,
-    "10": 16.5
+    "10": 16.5,
+    "11": 17.1
    },
    "team_id": 2,
    "slot": "RB",
    "slot_id": 2,
-   "projected": 17.56
+   "projected": 13.55
   },
   {
    "id": 4569987,
@@ -2246,12 +2478,13 @@
     "6": 8.8,
     "7": 15.2,
     "8": 20.8,
-    "10": 6.6
+    "10": 6.6,
+    "11": 3.9
    },
    "team_id": 2,
    "slot": "FLEX",
    "slot_id": 23,
-   "projected": 14.19
+   "projected": 14.37
   },
   {
    "id": 4360698,
@@ -2266,67 +2499,13 @@
     21
    ],
    "weekly": {
-    "9": 13.16
+    "9": 13.16,
+    "11": 6.34
    },
    "team_id": 2,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 0.0
-  },
-  {
-   "id": 15818,
-   "name": "Keenan Allen",
-   "pos": "WR",
-   "pos_id": 3,
-   "pro_team": 25,
-   "eligible": [
-    3,
-    4,
-    5,
-    7,
-    20,
-    21,
-    23
-   ],
-   "weekly": {
-    "9": 4.6,
-    "10": 8.6
-   },
-   "team_id": 2,
-   "slot": "WR",
-   "slot_id": 4,
-   "projected": 7.11
-  },
-  {
-   "id": 3116365,
-   "name": "Mark Andrews",
-   "pos": "TE",
-   "pos_id": 4,
-   "pro_team": 33,
-   "eligible": [
-    5,
-    6,
-    7,
-    20,
-    21,
-    23
-   ],
-   "weekly": {
-    "1": 6.9,
-    "2": 7.9,
-    "3": 3.9,
-    "4": 11.2,
-    "5": 2.8,
-    "6": 0.9,
-    "7": 3.8,
-    "8": 2.9,
-    "9": 2.9,
-    "10": 12.2
-   },
-   "team_id": 2,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 5.43
+   "projected": 11.74
   },
   {
    "id": 12483,
@@ -2353,9 +2532,9 @@
     "10": 19.76
    },
    "team_id": 2,
-   "slot": "QB",
-   "slot_id": 0,
-   "projected": 16.98
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4431299,
@@ -2378,12 +2557,13 @@
     "3": 5.9,
     "4": 12.4,
     "5": 3.5,
-    "9": 14.0
+    "9": 14.0,
+    "11": 6.5
    },
    "team_id": 2,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 0.0
+   "projected": 9.74
   },
   {
    "id": -16026,
@@ -2409,9 +2589,9 @@
     "10": 12.0
    },
    "team_id": 2,
-   "slot": "DST",
-   "slot_id": 16,
-   "projected": 7.0
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4685472,
@@ -2437,12 +2617,13 @@
     "7": 6.0,
     "8": 8.8,
     "9": 13.6,
-    "10": 5.0
+    "10": 5.0,
+    "11": 16.1
    },
    "team_id": 2,
-   "slot": "WR",
-   "slot_id": 4,
-   "projected": 13.42
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 11.67
   },
   {
    "id": 15847,
@@ -2467,19 +2648,20 @@
     "7": 6.4,
     "8": 9.2,
     "9": 15.3,
-    "10": 4.0
+    "10": 4.0,
+    "11": 22.4
    },
    "team_id": 2,
    "slot": "TE",
    "slot_id": 6,
-   "projected": 9.41
+   "projected": 9.49
   },
   {
-   "id": 4567156,
-   "name": "Treylon Burks",
+   "id": 4686422,
+   "name": "Xavier Hutchinson",
    "pos": "WR",
    "pos_id": 3,
-   "pro_team": 28,
+   "pro_team": 34,
    "eligible": [
     3,
     4,
@@ -2490,14 +2672,12 @@
     23
    ],
    "weekly": {
-    "8": 9.6,
-    "9": 0.0,
-    "10": 3.7
+    "11": 2.3
    },
    "team_id": 2,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 7.56
+   "slot": "WR",
+   "slot_id": 4,
+   "projected": 9.39
   },
   {
    "id": 4427366,
@@ -2523,12 +2703,13 @@
     "7": 0.0,
     "8": 0.0,
     "9": 10.2,
-    "10": 12.8
+    "10": 12.8,
+    "11": 17.5
    },
    "team_id": 3,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 11.0
+   "projected": 11.59
   },
   {
    "id": -16005,
@@ -2554,9 +2735,9 @@
     "10": 5.0
    },
    "team_id": 3,
-   "slot": "DST",
-   "slot_id": 16,
-   "projected": 4.21
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4596448,
@@ -2581,12 +2762,13 @@
     "6": 5.9,
     "7": 23.5,
     "8": 21.0,
-    "9": 26.5
+    "9": 26.5,
+    "11": 17.5
    },
    "team_id": 3,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
+   "slot": "SUPERFLEX",
+   "slot_id": 7,
+   "projected": 16.0
   },
   {
    "id": 4241389,
@@ -2613,12 +2795,13 @@
     "7": 21.9,
     "8": 9.3,
     "9": 28.5,
-    "10": 16.7
+    "10": 16.7,
+    "11": 24.7
    },
    "team_id": 3,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 17.0
+   "projected": 18.87
   },
   {
    "id": 4427095,
@@ -2644,7 +2827,7 @@
    "team_id": 3,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 8.42
+   "projected": 0.0
   },
   {
    "id": 3122840,
@@ -2669,9 +2852,9 @@
     "10": 21.38
    },
    "team_id": 3,
-   "slot": "SUPERFLEX",
-   "slot_id": 7,
-   "projected": 15.17
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4426348,
@@ -2694,12 +2877,13 @@
     "6": 21.0,
     "8": 14.98,
     "9": 14.56,
-    "10": 20.76
+    "10": 20.76,
+    "11": 17.06
    },
    "team_id": 3,
    "slot": "QB",
    "slot_id": 0,
-   "projected": 17.67
+   "projected": 19.56
   },
   {
    "id": 4429205,
@@ -2725,7 +2909,8 @@
     "7": 3.3,
     "8": 10.1,
     "9": 3.8,
-    "10": 0.0
+    "10": 0.0,
+    "11": 0.0
    },
    "team_id": 3,
    "slot": "BENCH",
@@ -2752,12 +2937,36 @@
     "7": 16.8,
     "8": 6.9,
     "9": 6.9,
-    "10": 13.5
+    "10": 13.5,
+    "11": 7.7
    },
    "team_id": 3,
    "slot": "FLEX",
    "slot_id": 23,
-   "projected": 14.99
+   "projected": 12.86
+  },
+  {
+   "id": -16029,
+   "name": "Panthers D/ST",
+   "pos": "DST",
+   "pos_id": 16,
+   "pro_team": 29,
+   "eligible": [
+    16,
+    20,
+    21
+   ],
+   "weekly": {
+    "3": 6.0,
+    "6": 6.0,
+    "7": -3.0,
+    "8": 5.0,
+    "11": 4.0
+   },
+   "team_id": 3,
+   "slot": "DST",
+   "slot_id": 16,
+   "projected": 5.87
   },
   {
    "id": 4428331,
@@ -2783,12 +2992,13 @@
     "7": 0.0,
     "8": 14.8,
     "9": 7.4,
-    "10": 10.7
+    "10": 10.7,
+    "11": 8.3
    },
    "team_id": 3,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 10.58
+   "projected": 10.49
   },
   {
    "id": 3121422,
@@ -2814,11 +3024,12 @@
     "6": 3.2,
     "8": 0.0,
     "9": 0.0,
-    "10": 0.0
+    "10": 0.0,
+    "11": 0.0
    },
    "team_id": 3,
-   "slot": "BENCH",
-   "slot_id": 20,
+   "slot": "IR",
+   "slot_id": 21,
    "projected": 0.0
   },
   {
@@ -2845,12 +3056,13 @@
     "7": 22.1,
     "8": 16.7,
     "9": 8.9,
-    "10": 6.2
+    "10": 6.2,
+    "11": 10.3
    },
    "team_id": 3,
    "slot": "TE",
    "slot_id": 6,
-   "projected": 10.5
+   "projected": 9.61
   },
   {
    "id": 4429059,
@@ -2870,12 +3082,13 @@
     "6": 9.1,
     "7": 8.6,
     "9": 7.9,
-    "10": 7.0
+    "10": 7.0,
+    "11": 0.0
    },
    "team_id": 3,
    "slot": "RB",
    "slot_id": 2,
-   "projected": 13.2
+   "projected": 0.0
   },
   {
    "id": 4047646,
@@ -2907,7 +3120,7 @@
    "team_id": 4,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 10.7
+   "projected": 0.0
   },
   {
    "id": 4360078,
@@ -2934,7 +3147,8 @@
     "7": 0.0,
     "8": 0.0,
     "9": 0.0,
-    "10": 0.0
+    "10": 0.0,
+    "11": 0.0
    },
    "team_id": 4,
    "slot": "IR",
@@ -2955,12 +3169,13 @@
    "weekly": {
     "4": 1.0,
     "5": -3.0,
-    "10": 10.0
+    "10": 10.0,
+    "11": 10.0
    },
    "team_id": 4,
    "slot": "DST",
    "slot_id": 16,
-   "projected": 6.22
+   "projected": 7.11
   },
   {
    "id": 4685247,
@@ -2982,12 +3197,13 @@
     "7": 16.4,
     "8": 22.3,
     "9": 4.4,
-    "10": 5.1
+    "10": 5.1,
+    "11": 8.9
    },
    "team_id": 4,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 6.92
+   "projected": 6.91
   },
   {
    "id": 4869645,
@@ -3008,12 +3224,13 @@
    "weekly": {
     "8": 6.3,
     "9": 10.0,
-    "10": 8.6
+    "10": 8.6,
+    "11": 4.0
    },
    "team_id": 4,
-   "slot": "WR",
-   "slot_id": 4,
-   "projected": 7.07
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 7.84
   },
   {
    "id": 2577417,
@@ -3037,12 +3254,35 @@
     "7": 23.28,
     "8": 19.8,
     "9": 19.5,
-    "10": 34.42
+    "10": 34.42,
+    "11": 35.9
    },
    "team_id": 4,
    "slot": "QB",
    "slot_id": 0,
-   "projected": 16.55
+   "projected": 21.89
+  },
+  {
+   "id": 3930086,
+   "name": "Dawson Knox",
+   "pos": "TE",
+   "pos_id": 4,
+   "pro_team": 2,
+   "eligible": [
+    5,
+    6,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "11": 4.1
+   },
+   "team_id": 4,
+   "slot": "TE",
+   "slot_id": 6,
+   "projected": 6.07
   },
   {
    "id": 4567750,
@@ -3068,12 +3308,13 @@
     "6": 14.3,
     "7": 0.0,
     "8": 0.0,
-    "9": 5.4
+    "9": 5.4,
+    "11": 2.8
    },
    "team_id": 4,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
+   "slot": "WR",
+   "slot_id": 4,
+   "projected": 9.03
   },
   {
    "id": 5083076,
@@ -3102,9 +3343,9 @@
     "10": 12.6
    },
    "team_id": 4,
-   "slot": "TE",
-   "slot_id": 6,
-   "projected": 8.0
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 2578570,
@@ -3127,12 +3368,13 @@
     "6": 6.92,
     "7": 16.48,
     "8": 3.46,
-    "10": 11.8
+    "10": 11.8,
+    "11": 13.74
    },
    "team_id": 4,
    "slot": "SUPERFLEX",
    "slot_id": 7,
-   "projected": 13.83
+   "projected": 11.52
   },
   {
    "id": 4361579,
@@ -3158,12 +3400,13 @@
     "7": 21.5,
     "8": 6.2,
     "9": 20.4,
-    "10": 7.2
+    "10": 7.2,
+    "11": 22.6
    },
    "team_id": 4,
    "slot": "RB",
    "slot_id": 2,
-   "projected": 13.59
+   "projected": 18.3
   },
   {
    "id": 4702555,
@@ -3181,12 +3424,13 @@
     25
    ],
    "weekly": {
-    "9": 16.8
+    "9": 16.8,
+    "11": 32.9
    },
    "team_id": 4,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
+   "slot": "FLEX",
+   "slot_id": 23,
+   "projected": 17.81
   },
   {
    "id": 3917315,
@@ -3209,7 +3453,8 @@
     "7": 13.9,
     "8": 19.9,
     "9": 0.0,
-    "10": 0.0
+    "10": 0.0,
+    "11": 0.0
    },
    "team_id": 4,
    "slot": "BENCH",
@@ -3232,36 +3477,13 @@
     23
    ],
    "weekly": {
-    "10": 3.6
+    "10": 3.6,
+    "11": 4.2
    },
    "team_id": 4,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 8.65
-  },
-  {
-   "id": 4569587,
-   "name": "Wan'Dale Robinson",
-   "pos": "WR",
-   "pos_id": 3,
-   "pro_team": 10,
-   "eligible": [
-    3,
-    4,
-    5,
-    7,
-    20,
-    21,
-    23
-   ],
-   "weekly": {
-    "1": 6.3,
-    "10": 2.5
-   },
-   "team_id": 4,
-   "slot": "FLEX",
-   "slot_id": 23,
-   "projected": 7.82
+   "projected": 9.0
   },
   {
    "id": 3042519,
@@ -3286,12 +3508,13 @@
     "7": 3.1,
     "8": 5.0,
     "9": 2.6,
-    "10": 12.0
+    "10": 12.0,
+    "11": 10.8
    },
    "team_id": 5,
-   "slot": "RB",
-   "slot_id": 2,
-   "projected": 7.52
+   "slot": "FLEX",
+   "slot_id": 23,
+   "projected": 7.34
   },
   {
    "id": 4432665,
@@ -3317,12 +3540,13 @@
     "7": 10.3,
     "8": 24.7,
     "9": 18.8,
-    "10": 2.8
+    "10": 2.8,
+    "11": 0.0
    },
    "team_id": 5,
-   "slot": "TE",
-   "slot_id": 6,
-   "projected": 12.44
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4685720,
@@ -3345,41 +3569,13 @@
     "7": 5.42,
     "8": 10.36,
     "9": 20.34,
-    "10": 8.1
+    "10": 8.1,
+    "11": 15.96
    },
    "team_id": 5,
    "slot": "QB",
    "slot_id": 0,
-   "projected": 18.8
-  },
-  {
-   "id": 4569559,
-   "name": "Devaughn Vele",
-   "pos": "WR",
-   "pos_id": 3,
-   "pro_team": 18,
-   "eligible": [
-    3,
-    4,
-    5,
-    7,
-    20,
-    21,
-    23
-   ],
-   "weekly": {
-    "3": 5.4,
-    "4": 14.4,
-    "5": 4.6,
-    "6": 5.7,
-    "7": 13.9,
-    "9": 2.7,
-    "10": 2.4
-   },
-   "team_id": 5,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 5.85
+   "projected": 17.37
   },
   {
    "id": 3924327,
@@ -3398,37 +3594,32 @@
     "10": 15.6
    },
    "team_id": 5,
-   "slot": "SUPERFLEX",
-   "slot_id": 7,
-   "projected": 17.59
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
-   "id": 4887558,
-   "name": "Emanuel Wilson",
-   "pos": "RB",
-   "pos_id": 2,
-   "pro_team": 26,
+   "id": 4883647,
+   "name": "Elic Ayomanor",
+   "pos": "WR",
+   "pos_id": 3,
+   "pro_team": 10,
    "eligible": [
-    2,
     3,
+    4,
+    5,
     7,
     20,
     21,
     23
    ],
    "weekly": {
-    "4": 25.5,
-    "5": 12.2,
-    "6": 5.2,
-    "7": 18.0,
-    "8": 0.0,
-    "9": 0.0,
-    "10": 0.0
+    "11": 4.2
    },
    "team_id": 5,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
+   "slot": "WR",
+   "slot_id": 4,
+   "projected": 7.98
   },
   {
    "id": 4362628,
@@ -3454,12 +3645,13 @@
     "7": 14.7,
     "8": 25.6,
     "9": 26.5,
-    "10": 28.6
+    "10": 28.6,
+    "11": 5.6
    },
    "team_id": 5,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 18.61
+   "projected": 21.02
   },
   {
    "id": 4685512,
@@ -3489,9 +3681,9 @@
     "10": 10.9
    },
    "team_id": 5,
-   "slot": "FLEX",
-   "slot_id": 23,
-   "projected": 10.87
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": -16030,
@@ -3509,12 +3701,13 @@
     "6": -2.0,
     "8": 21.0,
     "9": 12.0,
-    "10": 3.0
+    "10": 3.0,
+    "11": 5.0
    },
    "team_id": 5,
    "slot": "DST",
    "slot_id": 16,
-   "projected": 6.23
+   "projected": 7.06
   },
   {
    "id": 4430878,
@@ -3544,9 +3737,9 @@
     "10": 27.1
    },
    "team_id": 5,
-   "slot": "WR",
-   "slot_id": 4,
-   "projected": 18.54
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 3929645,
@@ -3571,40 +3764,13 @@
     "6": 0.0,
     "7": 1.2,
     "9": 10.4,
-    "10": 3.8
+    "10": 3.8,
+    "11": 0.0
    },
    "team_id": 5,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 5.84
-  },
-  {
-   "id": 4696044,
-   "name": "Kaelon Black",
-   "pos": "RB",
-   "pos_id": 2,
-   "pro_team": 25,
-   "eligible": [
-    2,
-    3,
-    7,
-    20,
-    21,
-    23,
-    25
-   ],
-   "weekly": {
-    "2": 2.5,
-    "3": 1.7,
-    "4": 1.3,
-    "5": 1.6,
-    "9": 7.0,
-    "10": 13.6
-   },
-   "team_id": 5,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 7.25
+   "slot": "TE",
+   "slot_id": 6,
+   "projected": 4.89
   },
   {
    "id": 4567048,
@@ -3629,12 +3795,57 @@
     "7": 7.7,
     "8": 10.4,
     "9": 34.3,
-    "10": 0.0
+    "10": 0.0,
+    "11": 0.0
    },
    "team_id": 5,
    "slot": "BENCH",
    "slot_id": 20,
    "projected": 0.0
+  },
+  {
+   "id": 4371733,
+   "name": "Kenny Gainwell",
+   "pos": "RB",
+   "pos_id": 2,
+   "pro_team": 27,
+   "eligible": [
+    2,
+    3,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "1": 2.3,
+    "2": 3.0,
+    "11": 7.9
+   },
+   "team_id": 5,
+   "slot": "RB",
+   "slot_id": 2,
+   "projected": 7.75
+  },
+  {
+   "id": 4433971,
+   "name": "Kyle McCord",
+   "pos": "QB",
+   "pos_id": 1,
+   "pro_team": 15,
+   "eligible": [
+    0,
+    7,
+    20,
+    21
+   ],
+   "weekly": {
+    "11": 2.98
+   },
+   "team_id": 5,
+   "slot": "SUPERFLEX",
+   "slot_id": 7,
+   "projected": 9.68
   },
   {
    "id": 3912547,
@@ -3666,32 +3877,6 @@
    "projected": 0.0
   },
   {
-   "id": -16025,
-   "name": "49ers D/ST",
-   "pos": "DST",
-   "pos_id": 16,
-   "pro_team": 25,
-   "eligible": [
-    16,
-    20,
-    21
-   ],
-   "weekly": {
-    "2": 9.0,
-    "3": 0.0,
-    "4": 5.0,
-    "5": 20.0,
-    "6": 5.0,
-    "7": 1.0,
-    "9": 19.0,
-    "10": -1.0
-   },
-   "team_id": 6,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 4.49
-  },
-  {
    "id": 8439,
    "name": "Aaron Rodgers",
    "pos": "QB",
@@ -3712,12 +3897,13 @@
     "6": 16.02,
     "7": 13.08,
     "8": 4.88,
-    "10": 15.62
+    "10": 15.62,
+    "11": 15.98
    },
    "team_id": 6,
-   "slot": "SUPERFLEX",
-   "slot_id": 7,
-   "projected": 14.79
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 15.17
   },
   {
    "id": 4374302,
@@ -3743,12 +3929,39 @@
     "7": 19.7,
     "8": 9.1,
     "9": 12.6,
-    "10": 23.8
+    "10": 23.8,
+    "11": 12.2
    },
    "team_id": 6,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 16.37
+   "projected": 14.27
+  },
+  {
+   "id": 4430539,
+   "name": "Brenton Strange",
+   "pos": "TE",
+   "pos_id": 4,
+   "pro_team": 30,
+   "eligible": [
+    5,
+    6,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "6": 6.9,
+    "8": 6.5,
+    "9": 3.2,
+    "10": 7.9,
+    "11": 3.1
+   },
+   "team_id": 6,
+   "slot": "TE",
+   "slot_id": 6,
+   "projected": 6.38
   },
   {
    "id": 4431611,
@@ -3771,12 +3984,13 @@
     "6": 16.5,
     "7": 22.12,
     "8": 13.98,
-    "9": 12.76
+    "9": 12.76,
+    "11": 14.34
    },
    "team_id": 6,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
+   "slot": "SUPERFLEX",
+   "slot_id": 7,
+   "projected": 18.96
   },
   {
    "id": -16012,
@@ -3797,12 +4011,13 @@
     "7": -1.0,
     "8": 2.0,
     "9": 12.0,
-    "10": 9.0
+    "10": 9.0,
+    "11": 8.0
    },
    "team_id": 6,
    "slot": "DST",
    "slot_id": 16,
-   "projected": 4.89
+   "projected": 7.01
   },
   {
    "id": 3915416,
@@ -3828,12 +4043,13 @@
     "6": 0.0,
     "8": 14.6,
     "9": 5.1,
-    "10": 17.4
+    "10": 17.4,
+    "11": 19.1
    },
    "team_id": 6,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 11.45
+   "projected": 11.75
   },
   {
    "id": 4385690,
@@ -3858,12 +4074,13 @@
     "6": 7.3,
     "8": 16.6,
     "9": 4.3,
-    "10": 6.8
+    "10": 6.8,
+    "11": 0.0
    },
    "team_id": 6,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 7.22
+   "projected": 0.0
   },
   {
    "id": 3916433,
@@ -3889,12 +4106,13 @@
     "6": 10.8,
     "8": 3.4,
     "9": 8.5,
-    "10": 4.9
+    "10": 4.9,
+    "11": 10.5
    },
    "team_id": 6,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 9.82
+   "projected": 9.2
   },
   {
    "id": 3046779,
@@ -3917,12 +4135,13 @@
     "7": 18.02,
     "8": 9.04,
     "9": 5.3,
-    "10": 20.42
+    "10": 20.42,
+    "11": 20.36
    },
    "team_id": 6,
    "slot": "QB",
    "slot_id": 0,
-   "projected": 17.29
+   "projected": 14.77
   },
   {
    "id": 4372016,
@@ -3948,39 +4167,13 @@
     "6": 4.4,
     "7": 6.8,
     "8": 13.4,
-    "9": 2.7
-   },
-   "team_id": 6,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
-  },
-  {
-   "id": 4360569,
-   "name": "Jordan Mason",
-   "pos": "RB",
-   "pos_id": 2,
-   "pro_team": 16,
-   "eligible": [
-    2,
-    3,
-    7,
-    20,
-    21,
-    23
-   ],
-   "weekly": {
-    "1": 11.9,
-    "2": 0.0,
-    "7": 6.8,
-    "8": 2.0,
-    "9": 5.2,
-    "10": 5.9
+    "9": 2.7,
+    "11": 7.6
    },
    "team_id": 6,
    "slot": "FLEX",
    "slot_id": 23,
-   "projected": 8.44
+   "projected": 10.34
   },
   {
    "id": 4430737,
@@ -4009,9 +4202,9 @@
     "10": 4.2
    },
    "team_id": 6,
-   "slot": "RB",
-   "slot_id": 2,
-   "projected": 16.97
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4239996,
@@ -4036,12 +4229,13 @@
     "6": 0.0,
     "7": 0.0,
     "9": 0.0,
-    "10": 4.9
+    "10": 4.9,
+    "11": 7.6
    },
    "team_id": 6,
-   "slot": "IR",
-   "slot_id": 21,
-   "projected": 9.36
+   "slot": "RB",
+   "slot_id": 2,
+   "projected": 10.44
   },
   {
    "id": 4572680,
@@ -4070,9 +4264,9 @@
     "10": 2.4
    },
    "team_id": 6,
-   "slot": "TE",
-   "slot_id": 6,
-   "projected": 7.38
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4361741,
@@ -4095,12 +4289,13 @@
     "6": 17.36,
     "7": 12.02,
     "9": 25.28,
-    "10": 31.66
+    "10": 31.66,
+    "11": 22.2
    },
    "team_id": 7,
    "slot": "SUPERFLEX",
    "slot_id": 7,
-   "projected": 20.72
+   "projected": 17.58
   },
   {
    "id": 4241416,
@@ -4125,12 +4320,13 @@
     "7": 8.0,
     "8": 21.4,
     "9": 11.6,
-    "10": 31.7
+    "10": 31.7,
+    "11": 26.0
    },
    "team_id": 7,
    "slot": "RB",
    "slot_id": 2,
-   "projected": 18.21
+   "projected": 18.93
   },
   {
    "id": 3121023,
@@ -4155,12 +4351,13 @@
     "6": 9.1,
     "7": 7.3,
     "8": 5.2,
-    "9": 7.5
+    "9": 7.5,
+    "11": 4.3
    },
    "team_id": 7,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 0.0
+   "projected": 6.12
   },
   {
    "id": 4426354,
@@ -4187,12 +4384,13 @@
     "7": 13.7,
     "8": 5.8,
     "9": 0.0,
-    "10": 38.0
+    "10": 38.0,
+    "11": 20.3
    },
    "team_id": 7,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 9.89
+   "slot": "WR",
+   "slot_id": 4,
+   "projected": 13.15
   },
   {
    "id": 4685261,
@@ -4213,12 +4411,13 @@
    "weekly": {
     "7": 4.2,
     "8": 5.5,
-    "10": 1.0
+    "10": 1.0,
+    "11": 7.0
    },
    "team_id": 7,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 8.41
+   "projected": 5.35
   },
   {
    "id": 4361050,
@@ -4243,12 +4442,13 @@
     "6": 20.9,
     "7": 2.2,
     "9": 13.8,
-    "10": 23.2
+    "10": 23.2,
+    "11": 4.0
    },
    "team_id": 7,
    "slot": "TE",
    "slot_id": 6,
-   "projected": 9.78
+   "projected": 10.13
   },
   {
    "id": 4426388,
@@ -4274,12 +4474,13 @@
     "7": 23.6,
     "8": 15.0,
     "9": 4.5,
-    "10": 7.0
+    "10": 7.0,
+    "11": 17.3
    },
    "team_id": 7,
-   "slot": "WR",
-   "slot_id": 4,
-   "projected": 10.11
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 9.36
   },
   {
    "id": 3918298,
@@ -4302,12 +4503,13 @@
     "6": 18.3,
     "8": 26.56,
     "9": 12.86,
-    "10": 22.34
+    "10": 22.34,
+    "11": 12.16
    },
    "team_id": 7,
    "slot": "QB",
    "slot_id": 0,
-   "projected": 24.3
+   "projected": 23.38
   },
   {
    "id": 4685702,
@@ -4336,9 +4538,9 @@
     "10": 14.6
    },
    "team_id": 7,
-   "slot": "FLEX",
-   "slot_id": 23,
-   "projected": 11.04
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 3929630,
@@ -4363,12 +4565,13 @@
     "6": 0.0,
     "7": 14.1,
     "8": 11.9,
-    "9": 8.2
+    "9": 8.2,
+    "11": 13.5
    },
    "team_id": 7,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
+   "slot": "FLEX",
+   "slot_id": 23,
+   "projected": 11.05
   },
   {
    "id": -16023,
@@ -4390,12 +4593,13 @@
     "6": 11.0,
     "7": 9.0,
     "8": 16.0,
-    "10": -7.0
+    "10": -7.0,
+    "11": 7.0
    },
    "team_id": 7,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 5.46
+   "slot": "DST",
+   "slot_id": 16,
+   "projected": 8.32
   },
   {
    "id": 4239993,
@@ -4421,12 +4625,13 @@
     "7": 23.8,
     "8": 32.5,
     "9": 17.7,
-    "10": 9.1
+    "10": 9.1,
+    "11": 11.3
    },
    "team_id": 7,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 13.06
+   "projected": 13.75
   },
   {
    "id": -16034,
@@ -4448,12 +4653,13 @@
     "6": -2.0,
     "7": 0.0,
     "9": 12.0,
-    "10": 5.0
+    "10": 5.0,
+    "11": 15.0
    },
    "team_id": 7,
-   "slot": "DST",
-   "slot_id": 16,
-   "projected": 7.11
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 6.7
   },
   {
    "id": 4890973,
@@ -4479,12 +4685,13 @@
     "7": 17.6,
     "8": 8.8,
     "9": 4.5,
-    "10": 8.4
+    "10": 8.4,
+    "11": 25.4
    },
    "team_id": 8,
    "slot": "SUPERFLEX",
    "slot_id": 7,
-   "projected": 11.49
+   "projected": 11.93
   },
   {
    "id": 3052587,
@@ -4507,12 +4714,13 @@
     "6": 0.0,
     "7": 6.66,
     "8": 1.4,
-    "9": 7.72
+    "9": 7.72,
+    "11": 19.08
    },
    "team_id": 8,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 0.0
+   "projected": 12.04
   },
   {
    "id": 4871023,
@@ -4539,12 +4747,13 @@
     "6": 16.0,
     "7": 7.4,
     "8": 0.0,
-    "10": 0.0
+    "10": 0.0,
+    "11": 12.8
    },
    "team_id": 8,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 0.0
+   "projected": 10.48
   },
   {
    "id": 4832800,
@@ -4573,9 +4782,9 @@
     "10": 2.1
    },
    "team_id": 8,
-   "slot": "FLEX",
-   "slot_id": 23,
-   "projected": 10.8
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4426502,
@@ -4605,9 +4814,9 @@
     "10": 13.9
    },
    "team_id": 8,
-   "slot": "WR",
-   "slot_id": 4,
-   "projected": 12.08
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4837248,
@@ -4627,12 +4836,13 @@
     "2": 0.0,
     "3": 0.0,
     "4": 0.0,
-    "10": 13.92
+    "10": 13.92,
+    "11": 22.88
    },
    "team_id": 8,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 13.52
+   "slot": "QB",
+   "slot_id": 0,
+   "projected": 14.46
   },
   {
    "id": 4379399,
@@ -4657,12 +4867,13 @@
     "6": 22.8,
     "8": 17.1,
     "9": 16.7,
-    "10": 21.7
+    "10": 21.7,
+    "11": 16.2
    },
    "team_id": 8,
    "slot": "RB",
    "slot_id": 2,
-   "projected": 19.71
+   "projected": 20.18
   },
   {
    "id": 4047365,
@@ -4720,35 +4931,6 @@
    "team_id": 8,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 8.41
-  },
-  {
-   "id": 3916387,
-   "name": "Lamar Jackson",
-   "pos": "QB",
-   "pos_id": 1,
-   "pro_team": 33,
-   "eligible": [
-    0,
-    7,
-    20,
-    21
-   ],
-   "weekly": {
-    "1": 24.96,
-    "2": 14.8,
-    "3": 20.44,
-    "4": 18.88,
-    "5": 0.0,
-    "6": 0.0,
-    "7": 0.0,
-    "8": 0.0,
-    "9": 0.0,
-    "10": 0.0
-   },
-   "team_id": 8,
-   "slot": "IR",
-   "slot_id": 21,
    "projected": 0.0
   },
   {
@@ -4774,9 +4956,9 @@
     "10": 12.34
    },
    "team_id": 8,
-   "slot": "QB",
-   "slot_id": 0,
-   "projected": 12.9
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4361411,
@@ -4796,12 +4978,13 @@
     "6": 2.1,
     "7": 3.0,
     "8": 10.6,
-    "10": 10.5
+    "10": 10.5,
+    "11": 6.5
    },
    "team_id": 8,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 7.18
+   "projected": 6.23
   },
   {
    "id": -16014,
@@ -4827,9 +5010,9 @@
     "10": 16.0
    },
    "team_id": 8,
-   "slot": "DST",
-   "slot_id": 16,
-   "projected": 8.27
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4430027,
@@ -4854,12 +5037,34 @@
     "7": 2.3,
     "8": 5.0,
     "9": 5.2,
-    "10": 2.1
+    "10": 2.1,
+    "11": 7.7
    },
    "team_id": 8,
    "slot": "TE",
    "slot_id": 6,
-   "projected": 9.22
+   "projected": 7.74
+  },
+  {
+   "id": -16004,
+   "name": "Bengals D/ST",
+   "pos": "DST",
+   "pos_id": 16,
+   "pro_team": 4,
+   "eligible": [
+    16,
+    20,
+    21
+   ],
+   "weekly": {
+    "3": 0.0,
+    "8": 2.0,
+    "11": 0.0
+   },
+   "team_id": 9,
+   "slot": "DST",
+   "slot_id": 16,
+   "projected": 5.03
   },
   {
    "id": 4430807,
@@ -4888,34 +5093,9 @@
     "10": 15.7
    },
    "team_id": 9,
-   "slot": "RB",
-   "slot_id": 2,
-   "projected": 16.77
-  },
-  {
-   "id": 4430539,
-   "name": "Brenton Strange",
-   "pos": "TE",
-   "pos_id": 4,
-   "pro_team": 30,
-   "eligible": [
-    5,
-    6,
-    7,
-    20,
-    21,
-    23
-   ],
-   "weekly": {
-    "6": 6.9,
-    "8": 6.5,
-    "9": 3.2,
-    "10": 7.9
-   },
-   "team_id": 9,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 7.68
+   "projected": 0.0
   },
   {
    "id": 4569618,
@@ -4942,12 +5122,13 @@
     "7": 3.6,
     "8": 11.3,
     "9": 0.0,
-    "10": 12.1
+    "10": 12.1,
+    "11": 5.4
    },
    "team_id": 9,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 10.24
+   "projected": 11.33
   },
   {
    "id": 4433970,
@@ -4964,12 +5145,13 @@
    "weekly": {
     "7": 10.18,
     "9": 7.28,
-    "10": 17.12
+    "10": 17.12,
+    "11": 14.22
    },
    "team_id": 9,
    "slot": "SUPERFLEX",
    "slot_id": 7,
-   "projected": 15.21
+   "projected": 13.37
   },
   {
    "id": 4241985,
@@ -4994,12 +5176,13 @@
     "6": 12.1,
     "7": 8.3,
     "8": 1.3,
-    "9": 2.7
+    "9": 2.7,
+    "11": 0.0
    },
    "team_id": 9,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
+   "slot": "RB",
+   "slot_id": 2,
+   "projected": 8.03
   },
   {
    "id": 4036378,
@@ -5026,9 +5209,9 @@
     "10": 10.8
    },
    "team_id": 9,
-   "slot": "QB",
-   "slot_id": 0,
-   "projected": 16.09
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4038941,
@@ -5051,12 +5234,13 @@
     "6": 8.76,
     "8": 7.78,
     "9": 10.42,
-    "10": 16.26
+    "10": 16.26,
+    "11": 22.44
    },
    "team_id": 9,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 12.05
+   "slot": "QB",
+   "slot_id": 0,
+   "projected": 14.65
   },
   {
    "id": 4262921,
@@ -5082,12 +5266,13 @@
     "7": 6.4,
     "8": 11.8,
     "9": 7.3,
-    "10": 11.9
+    "10": 11.9,
+    "11": 10.2
    },
    "team_id": 9,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 15.41
+   "projected": 16.38
   },
   {
    "id": 4685278,
@@ -5113,12 +5298,13 @@
     "6": 13.5,
     "7": 21.7,
     "8": 15.1,
-    "9": 17.2
+    "9": 17.2,
+    "11": 2.3
    },
    "team_id": 9,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
+   "slot": "FLEX",
+   "slot_id": 23,
+   "projected": 12.4
   },
   {
    "id": 4701936,
@@ -5148,9 +5334,9 @@
     "10": 9.5
    },
    "team_id": 9,
-   "slot": "FLEX",
-   "slot_id": 23,
-   "projected": 14.37
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 3116164,
@@ -5171,12 +5357,13 @@
     "7": 7.1,
     "8": 15.6,
     "9": 2.1,
-    "10": 1.4
+    "10": 1.4,
+    "11": 10.2
    },
    "team_id": 9,
    "slot": "TE",
    "slot_id": 6,
-   "projected": 6.22
+   "projected": 6.12
   },
   {
    "id": -16009,
@@ -5194,9 +5381,9 @@
     "10": 4.0
    },
    "team_id": 9,
-   "slot": "DST",
-   "slot_id": 16,
-   "projected": 5.53
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4432620,
@@ -5222,12 +5409,13 @@
     "6": 8.4,
     "8": 3.1,
     "9": 13.1,
-    "10": 24.7
+    "10": 24.7,
+    "11": 14.3
    },
    "team_id": 9,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 12.63
+   "projected": 13.34
   },
   {
    "id": 4882093,
@@ -5252,12 +5440,41 @@
     "6": 22.7,
     "8": 28.9,
     "9": 8.9,
-    "10": 18.8
+    "10": 18.8,
+    "11": 6.8
    },
    "team_id": 12,
    "slot": "FLEX",
    "slot_id": 23,
-   "projected": 16.23
+   "projected": 15.89
+  },
+  {
+   "id": -16007,
+   "name": "Broncos D/ST",
+   "pos": "DST",
+   "pos_id": 16,
+   "pro_team": 7,
+   "eligible": [
+    16,
+    20,
+    21
+   ],
+   "weekly": {
+    "1": 2.0,
+    "2": 9.0,
+    "3": 9.0,
+    "4": 1.0,
+    "5": 14.0,
+    "6": 11.0,
+    "7": 3.0,
+    "8": 1.0,
+    "9": 6.0,
+    "11": 12.0
+   },
+   "team_id": 12,
+   "slot": "DST",
+   "slot_id": 16,
+   "projected": 6.46
   },
   {
    "id": -16027,
@@ -5271,12 +5488,13 @@
     21
    ],
    "weekly": {
-    "2": 4.0
+    "2": 4.0,
+    "11": -1.0
    },
    "team_id": 12,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 0.0
+   "projected": 4.53
   },
   {
    "id": 4432577,
@@ -5299,12 +5517,13 @@
     "6": 22.98,
     "7": 16.52,
     "9": 35.36,
-    "10": 20.44
+    "10": 20.44,
+    "11": 20.46
    },
    "team_id": 12,
    "slot": "SUPERFLEX",
    "slot_id": 7,
-   "projected": 18.27
+   "projected": 21.84
   },
   {
    "id": 3128429,
@@ -5330,12 +5549,13 @@
     "6": 2.9,
     "7": 6.0,
     "8": 7.3,
-    "9": 13.0
+    "9": 13.0,
+    "11": 0.0
    },
    "team_id": 12,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 0.0
+   "projected": 8.79
   },
   {
    "id": 4242335,
@@ -5361,12 +5581,13 @@
     "7": 18.0,
     "8": 4.7,
     "9": 6.9,
-    "10": 11.3
+    "10": 11.3,
+    "11": 4.7
    },
    "team_id": 12,
    "slot": "RB",
    "slot_id": 2,
-   "projected": 16.36
+   "projected": 15.17
   },
   {
    "id": 4880281,
@@ -5385,12 +5606,13 @@
     25
    ],
    "weekly": {
-    "10": 13.5
+    "10": 13.5,
+    "11": 1.5
    },
    "team_id": 12,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 6.89
+   "projected": 9.09
   },
   {
    "id": 4595348,
@@ -5416,12 +5638,13 @@
     "6": 22.5,
     "7": 14.6,
     "9": 6.8,
-    "10": 4.9
+    "10": 4.9,
+    "11": 15.0
    },
    "team_id": 12,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 13.07
+   "projected": 12.74
   },
   {
    "id": 3139477,
@@ -5444,12 +5667,13 @@
     "7": 6.0,
     "8": 25.44,
     "9": 16.48,
-    "10": 35.42
+    "10": 35.42,
+    "11": 24.96
    },
    "team_id": 12,
    "slot": "QB",
    "slot_id": 0,
-   "projected": 18.55
+   "projected": 21.78
   },
   {
    "id": 4426515,
@@ -5503,37 +5727,13 @@
     "3": 10.6,
     "8": 13.0,
     "9": 5.9,
-    "10": 5.7
+    "10": 5.7,
+    "11": 0.0
    },
    "team_id": 12,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 9.7
-  },
-  {
-   "id": -16033,
-   "name": "Ravens D/ST",
-   "pos": "DST",
-   "pos_id": 16,
-   "pro_team": 33,
-   "eligible": [
-    16,
-    20,
-    21
-   ],
-   "weekly": {
-    "1": 8.0,
-    "2": 5.0,
-    "3": 1.0,
-    "4": 7.0,
-    "6": 10.0,
-    "7": -3.0,
-    "10": 4.0
-   },
-   "team_id": 12,
-   "slot": "DST",
-   "slot_id": 16,
-   "projected": 7.76
+   "projected": 6.76
   },
   {
    "id": 4036133,
@@ -5558,12 +5758,13 @@
     "7": 11.5,
     "8": 13.8,
     "9": 5.3,
-    "10": 0.0
+    "10": 0.0,
+    "11": 8.5
    },
    "team_id": 12,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
+   "slot": "TE",
+   "slot_id": 6,
+   "projected": 9.0
   },
   {
    "id": 4431459,
@@ -5589,12 +5790,13 @@
     "7": 0.0,
     "8": 3.8,
     "9": 6.4,
-    "10": 1.4
+    "10": 1.4,
+    "11": 2.7
    },
    "team_id": 12,
-   "slot": "TE",
-   "slot_id": 6,
-   "projected": 8.18
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 6.62
   },
   {
    "id": 4426385,
@@ -5625,7 +5827,7 @@
    "team_id": 12,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 13.61
+   "projected": 0.0
   },
   {
    "id": 4429096,
@@ -5654,9 +5856,9 @@
     "10": 19.4
    },
    "team_id": 14,
-   "slot": "SUPERFLEX",
-   "slot_id": 7,
-   "projected": 10.89
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4426338,
@@ -5679,12 +5881,37 @@
     "6": 4.48,
     "7": 26.18,
     "8": 19.28,
-    "9": 15.68
+    "9": 15.68,
+    "11": 11.5
+   },
+   "team_id": 14,
+   "slot": "QB",
+   "slot_id": 0,
+   "projected": 20.78
+  },
+  {
+   "id": 4360635,
+   "name": "Chig Okonkwo",
+   "pos": "TE",
+   "pos_id": 4,
+   "pro_team": 28,
+   "eligible": [
+    5,
+    6,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "8": 2.2,
+    "9": 8.7,
+    "11": 8.6
    },
    "team_id": 14,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 0.0
+   "projected": 7.79
   },
   {
    "id": 3117251,
@@ -5709,12 +5936,13 @@
     "6": 26.2,
     "7": 19.0,
     "9": 21.7,
-    "10": 44.3
+    "10": 44.3,
+    "11": 13.2
    },
    "team_id": 14,
    "slot": "FLEX",
    "slot_id": 23,
-   "projected": 19.45
+   "projected": 17.63
   },
   {
    "id": 4248528,
@@ -5744,9 +5972,9 @@
     "10": 5.2
    },
    "team_id": 14,
-   "slot": "WR",
-   "slot_id": 4,
-   "projected": 12.83
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4723086,
@@ -5771,12 +5999,13 @@
     "6": 15.5,
     "7": 16.4,
     "8": 8.0,
-    "9": 7.4
+    "9": 7.4,
+    "11": 10.4
    },
    "team_id": 14,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 0.0
+   "slot": "TE",
+   "slot_id": 6,
+   "projected": 10.31
   },
   {
    "id": 4259545,
@@ -5801,34 +6030,13 @@
     "6": 21.0,
     "7": 17.0,
     "8": 26.9,
-    "9": 3.1
+    "9": 3.1,
+    "11": 10.9
    },
    "team_id": 14,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 0.0
-  },
-  {
-   "id": 2576925,
-   "name": "Darren Waller",
-   "pos": "TE",
-   "pos_id": 4,
-   "pro_team": 29,
-   "eligible": [
-    5,
-    6,
-    7,
-    20,
-    21,
-    23
-   ],
-   "weekly": {
-    "10": 3.4
-   },
-   "team_id": 14,
-   "slot": "TE",
-   "slot_id": 6,
-   "projected": 6.98
+   "projected": 15.63
   },
   {
    "id": 3915511,
@@ -5851,12 +6059,13 @@
     "7": 28.88,
     "8": 39.48,
     "9": 29.54,
-    "10": 33.16
+    "10": 33.16,
+    "11": 19.9
    },
    "team_id": 14,
-   "slot": "QB",
-   "slot_id": 0,
-   "projected": 19.03
+   "slot": "SUPERFLEX",
+   "slot_id": 7,
+   "projected": 22.86
   },
   {
    "id": 16737,
@@ -5882,12 +6091,13 @@
     "6": 10.9,
     "7": 0.0,
     "9": 0.0,
-    "10": 0.0
+    "10": 0.0,
+    "11": 19.9
    },
    "team_id": 14,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 0.0
+   "projected": 9.47
   },
   {
    "id": 4258173,
@@ -5913,12 +6123,13 @@
     "6": 9.4,
     "7": 1.6,
     "9": 13.5,
-    "10": 19.9
+    "10": 19.9,
+    "11": 13.3
    },
    "team_id": 14,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 11.46
+   "projected": 13.44
   },
   {
    "id": 2976212,
@@ -5944,12 +6155,13 @@
     "6": 13.4,
     "8": 11.3,
     "9": 6.6,
-    "10": 17.3
+    "10": 17.3,
+    "11": 6.5
    },
    "team_id": 14,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 8.27
+   "slot": "WR",
+   "slot_id": 4,
+   "projected": 10.53
   },
   {
    "id": 3916148,
@@ -5974,12 +6186,13 @@
     "6": 7.6,
     "7": 35.0,
     "8": 27.2,
-    "10": 19.9
+    "10": 19.9,
+    "11": 11.0
    },
    "team_id": 14,
    "slot": "RB",
    "slot_id": 2,
-   "projected": 12.48
+   "projected": 19.06
   },
   {
    "id": -16016,
@@ -6001,12 +6214,13 @@
     "7": 11.0,
     "8": 5.0,
     "9": 6.0,
-    "10": 21.0
+    "10": 21.0,
+    "11": 0.0
    },
    "team_id": 14,
    "slot": "DST",
    "slot_id": 16,
-   "projected": 4.96
+   "projected": 4.47
   },
   {
    "id": 4361370,
@@ -6032,12 +6246,13 @@
     "6": 12.3,
     "7": 8.6,
     "9": 13.3,
-    "10": 4.5
+    "10": 4.5,
+    "11": 14.7
    },
    "team_id": 15,
    "slot": "WR",
    "slot_id": 4,
-   "projected": 12.71
+   "projected": 11.24
   },
   {
    "id": -16011,
@@ -6051,12 +6266,13 @@
     21
    ],
    "weekly": {
-    "10": 14.0
+    "10": 14.0,
+    "11": 2.0
    },
    "team_id": 15,
    "slot": "DST",
    "slot_id": 16,
-   "projected": 6.33
+   "projected": 2.62
   },
   {
    "id": 4047650,
@@ -6082,12 +6298,36 @@
     "6": 14.8,
     "7": 6.6,
     "8": 0.9,
-    "10": 14.4
+    "10": 14.4,
+    "11": 0.7
    },
    "team_id": 15,
-   "slot": "FLEX",
-   "slot_id": 23,
-   "projected": 8.92
+   "slot": "WR",
+   "slot_id": 4,
+   "projected": 9.53
+  },
+  {
+   "id": 2576925,
+   "name": "Darren Waller",
+   "pos": "TE",
+   "pos_id": 4,
+   "pro_team": 29,
+   "eligible": [
+    5,
+    6,
+    7,
+    20,
+    21,
+    23
+   ],
+   "weekly": {
+    "10": 3.4,
+    "11": 5.7
+   },
+   "team_id": 15,
+   "slot": "TE",
+   "slot_id": 6,
+   "projected": 7.02
   },
   {
    "id": 16800,
@@ -6142,12 +6382,13 @@
     "5": 1.5,
     "6": 0.0,
     "7": 0.0,
-    "10": 24.4
+    "10": 24.4,
+    "11": 6.2
    },
    "team_id": 15,
-   "slot": "WR",
-   "slot_id": 4,
-   "projected": 10.04
+   "slot": "FLEX",
+   "slot_id": 23,
+   "projected": 8.79
   },
   {
    "id": 15864,
@@ -6170,40 +6411,13 @@
     "7": 23.48,
     "8": 18.0,
     "9": 7.4,
-    "10": 5.92
-   },
-   "team_id": 15,
-   "slot": "SUPERFLEX",
-   "slot_id": 7,
-   "projected": 14.79
-  },
-  {
-   "id": 3046439,
-   "name": "Hunter Henry",
-   "pos": "TE",
-   "pos_id": 4,
-   "pro_team": 17,
-   "eligible": [
-    5,
-    6,
-    7,
-    20,
-    21,
-    23
-   ],
-   "weekly": {
-    "1": 4.1,
-    "2": 5.5,
-    "3": 1.0,
-    "7": 10.6,
-    "8": 4.5,
-    "9": 5.0,
-    "10": 3.2
+    "10": 5.92,
+    "11": 19.44
    },
    "team_id": 15,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 7.04
+   "projected": 14.18
   },
   {
    "id": 4429795,
@@ -6228,12 +6442,13 @@
     "7": 14.8,
     "8": 23.8,
     "9": 13.4,
-    "10": 40.7
+    "10": 40.7,
+    "11": 25.8
    },
    "team_id": 15,
    "slot": "RB",
    "slot_id": 2,
-   "projected": 21.63
+   "projected": 19.8
   },
   {
    "id": 4870808,
@@ -6260,7 +6475,8 @@
     "7": 0.0,
     "8": 2.3,
     "9": 0.0,
-    "10": 0.0
+    "10": 0.0,
+    "11": 0.0
    },
    "team_id": 15,
    "slot": "BENCH",
@@ -6286,12 +6502,13 @@
     "7": 20.4,
     "8": 28.18,
     "9": 12.64,
-    "10": 15.38
+    "10": 15.38,
+    "11": 7.4
    },
    "team_id": 15,
-   "slot": "BENCH",
-   "slot_id": 20,
-   "projected": 12.98
+   "slot": "SUPERFLEX",
+   "slot_id": 7,
+   "projected": 14.66
   },
   {
    "id": 4360248,
@@ -6320,9 +6537,9 @@
     "10": 5.0
    },
    "team_id": 15,
-   "slot": "TE",
-   "slot_id": 6,
-   "projected": 7.31
+   "slot": "BENCH",
+   "slot_id": 20,
+   "projected": 0.0
   },
   {
    "id": 4038815,
@@ -6345,12 +6562,13 @@
     "4": 0.0,
     "5": 0.0,
     "8": 11.6,
-    "10": 4.4
+    "10": 4.4,
+    "11": 5.4
    },
    "team_id": 15,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 8.55
+   "projected": 8.15
   },
   {
    "id": 4428718,
@@ -6371,12 +6589,13 @@
     "7": 18.8,
     "8": 0.0,
     "9": 7.5,
-    "10": 1.4
+    "10": 1.4,
+    "11": 6.0
    },
    "team_id": 15,
    "slot": "BENCH",
    "slot_id": 20,
-   "projected": 6.87
+   "projected": 7.95
   },
   {
    "id": 4360689,
@@ -6399,12 +6618,13 @@
     "6": 26.96,
     "7": 13.82,
     "9": 19.7,
-    "10": 9.98
+    "10": 9.98,
+    "11": 14.28
    },
    "team_id": 15,
    "slot": "QB",
    "slot_id": 0,
-   "projected": 17.47
+   "projected": 14.95
   }
  ]
 }
